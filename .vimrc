@@ -1,9 +1,9 @@
-set runtimepath+=~/.vim_runtime
+set runtimepath+=~/.vim/.vim_runtime
 
-source ~/.vim_runtime/vimrcs/basic.vim
-source ~/.vim_runtime/vimrcs/filetypes.vim
-source ~/.vim_runtime/vimrcs/plugins_config.vim
-source ~/.vim_runtime/vimrcs/extended.vim
+source ~/.vim/.vim_runtime/vimrcs/basic.vim
+source ~/.vim/.vim_runtime/vimrcs/filetypes.vim
+source ~/.vim/.vim_runtime/vimrcs/plugins_config.vim
+source ~/.vim/.vim_runtime/vimrcs/extended.vim
 
 try
     source ~/.vim_runtime/my_configs.vim
@@ -62,8 +62,9 @@ inoremap <silent><C-y> <ESC>ggv<S-g>y<C-o><C-o>
 vnoremap <silent><C-y> <ESC>ggv<S-g>y<C-o><C-o> 
 
 "解决 O 卡顿
-"set noesckeys
-nnoremap <silent>O ko
+set noesckeys
+" 该法存在问题, 在第一行无法往上开新行
+"nnoremap <silent>O ko
 noremap <silent>j gj
 noremap <silent>k gk
 noremap yj yj
