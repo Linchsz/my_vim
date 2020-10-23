@@ -99,6 +99,7 @@ call vundle#begin()
     Plugin 'tpope/vim-fugitive'
     Plugin 'jiangmiao/auto-pairs'
     Plugin 'bling/vim-bufferline'
+    "Plugin 'itchyny/lightline.vim'
     Plugin 'vim-airline/vim-airline'
     Plugin 'vim-airline/vim-airline-themes'
     "Bundle 'NERDTree'

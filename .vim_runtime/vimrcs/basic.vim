@@ -273,12 +273,12 @@ nnoremap <silent> bs :ls<CR>
 "nnoremap <silent> <C-t> :enew<CR>
 nnoremap <silent> <C-t> :enew<CR>
 " normal 模式下使用 bn 切换到下一个 Buffer
-nnoremap <silent> <C-l> :bnext<CR>
+nnoremap <silent> <C-n> :bnext<CR>
 " normal 模式下使用 bn 切换到上一个 Buffer
-nnoremap <silent> <C-h> :bpre<CR>
+nnoremap <silent> <C-p> :bpre<CR>
 " normal 模式下使用 bd 关闭当前 Buffer
-nnoremap <silent> <C-w> :bdel<CR>
-" normal 模式下使用 bd 关闭所以 Buffer
+nnoremap <silent> <C-d> :bdel<CR>
+" normal 模式下使用 bd 关闭所有 Buffer
 nnoremap <silent> <C-a> :bufdo bd<CR>
 " Close the current buffer
 "map <leader>bd :Bclose<cr>:tabclose<cr>gT
@@ -327,7 +327,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
