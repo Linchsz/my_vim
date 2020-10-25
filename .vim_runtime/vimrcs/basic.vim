@@ -220,7 +220,7 @@ set undofile
 set expandtab
 
 " Be smart when using tabs ;)
-set smarttab
+"set smarttab
 
 " 1 tab == 4 spaces
 " 在文本上按下>>(增加一级缩进)、<<(取消一级缩进)或者==(取消全部缩进)时,每一级的字符数
@@ -235,8 +235,6 @@ set softtabstop=4
 set lbr
 set tw=500
 
-set ai "autoindent
-set si "smartindent
 set wrap "Wrap lines 自动折行,即太长的行分成几行显示
 
 

@@ -44,32 +44,33 @@ let mapleader = ","
 "map <leader>n :set nu<CR>
 
 " 快速保存  <leader> + w
-noremap <silent><leader>w :w!<CR><ESC>
+nnoremap <silent><leader>w :w!<CR><ESC>
 inoremap <silent><leader>w <ESC>:w!<CR><ESC>
 vnoremap <silent><leader>w <ESC>:w!<CR><ESC>
 
 " 保存并退出按键映射为 <leader> + q
 " :x 和 ZZ 命令与 :wq 类似, 但不会写入没有改变的文件, 并且更快
-noremap <silent><leader>q :x<CR>
+nnoremap <silent><leader>q :x<CR>
 inoremap <silent><leader>q <ESC>:x<CR>
 vnoremap <silent><leader>q <ESC>:x<CR>
 
 "复制全文到系统剪切板
-noremap <silent><leader>y ggv<S-g>$y<C-o><C-o> 
+nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o> 
 inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
 vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
 
 "解决 O 卡顿
 set noesckeys
-" 该法存在问题, 在第一行无法往上开新行
+"该法存在问题, 在第一行无法往上开新行
 "nnoremap <silent>O ko
-noremap <silent>j gj
-noremap <silent>k gk
-noremap yj yj
-noremap yk yk
-noremap dj dj
-noremap dk dk
-noremap dd dd  
+
+nnoremap <silent>j gj
+nnoremap <silent>k gk
+nnoremap yj yj
+nnoremap yk yk
+nnoremap dj dj
+nnoremap dk dk
+nnoremap dd dd  
 "映射 dd 避免因映射 dj 和 dk 造成 d 卡顿 
 " Remap VIM 0 to first non-blank character
 
@@ -128,6 +129,10 @@ filetype indent on
 
 "命令模式下, 在底部显示, 当前键入的指令
 set showcmd
+
+set autoindent
+
+set smartindent
 
 "支持使用鼠标
 set mouse=a

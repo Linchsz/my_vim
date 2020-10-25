@@ -241,9 +241,9 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " => auto-pairs
 """"""""""""""""""""""""""""""
 " 设置要自动配对的符号
-let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'} 
+"let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'} 
 " 添加要自动配对的符号<>
-let g:AutoPairs['<']='>' 
+"let g:AutoPairs['<']='>' 
 " 设置要自动配对的符号, 默认为g:AutoPairs, 可以通过自动命令来对不同文件类型设置不同自动匹配对符号
 "let b:AutoPairs = g:AutoParis 
 " 设置插件打开/关闭的快捷键, 默认为ALT+p
@@ -261,7 +261,7 @@ let g:AutoPairs['<']='>'
 " 把ENTER键映射为换行并缩进, 默认为1
 "let g:AutoPairsMapCR = 1 
 " 当g:AutoPairsMapCR为1时, 且文本位于窗口底部时, 自动移到窗口中间
-let g:AutoPairsCenterLine = 1 
+"let g:AutoPairsCenterLine = 1 
 " 把SPACE键映射为在括号两侧添加空格, 默认为1
 "let g:AutoPairsMapSpace = 1 
 " 启用飞行模式, 默认为0
