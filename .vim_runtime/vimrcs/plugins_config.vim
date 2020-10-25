@@ -34,8 +34,8 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 " => AirLine
 """"""""""""""""""""""""""""""
 "let g:airline_theme="molokai" 
-let g:airline_theme='bubblegum'
-let g:airline_powerline_fonts = 1
+let g:airline_theme                            ='bubblegum'
+let g:airline_powerline_fonts                  = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -43,36 +43,30 @@ let g:airline_symbols.linenr                   = ''
 let g:airline_symbols.maxlinenr                = ' '
 "
 let w:airline_skip_empty_sections              = 1
-"在底部显示 buffer 标签
+"let g:airline_section_a                        = '['mode', ' ', 'foo']'
 "let g:airline_section_b                        = '%{fugitive#head()}'
-"let g:airline_section_b = '%-0.10{getcwd()}'
-"let g:airline_section_c = '%t'  "显示当前 buffer 文件名 
+"let g:airline_section_b                        = '%-0.10{getcwd()}'
+"let g:airline_section_b                        = '['ffenc','file']'        " 在底部显示 buffer 标签
+"let g:airline_section_c                        = '%t'                      " 显示当前 buffer 文件名 
+let g:airline_section_c                        = '%{getcwd()}'              " 显示当前目录路径
 let g:airline_section_x                        = '%{&filetype}'
 let g:airline_section_warning                  = ''
-function! AirlineInit()
-    "let g:airline_section_a = airline#section#create(['mode', ' ', 'foo'])
-    "在底部显示 buffer 标签
-    "let g:airline_section_b = airline#section#create_left(['ffenc','file'])
-    "显示当前目录路径
-    let g:airline_section_c = airline#section#create(['%{getcwd()}'])
-endfunction
-autocmd User AirlineAfterInit call AirlineInit()
 let g:airline#extensions#tabline#enabled       = 1
 " buffer 名称 => 文件全路径 + 文件名
 "let g:airline#extensions#tabline#fnamemod      = ':~'
 " 当前目录下文件 buffer 名称  => 文件名
 " 非当前目录下文件 buffer 名称  => 文件全路径 + 文件名
-let g:airline#extensions#tabline#fnamemod      = ':p:.'
+let g:airline#extensions#tabline#fnamemod       = ':p:.'
 " 当前目录外的文件的 buffer 的目录是否以首字母简写
 " configure collapsing parent directories in buffer name
-let g:airline#extensions#tabline#fnamecollapse = 1
+let g:airline#extensions#tabline#fnamecollapse  = 1
 " configure truncating non-active buffer names to specified length
-"let g:airline#extensions#tabline#fnametruncate = 0
+"let g:airline#extensions#tabline#fnametruncate  = 0
 let g:airline_exclude_filenames = [] " see source for current list
 let g:airline#extensions#branch#enabled              = 1
 let g:airline#extensions#branch#displayed_head_limit = 10
 " 显示 buffer 编号，方便切换
-"let g:airline#extensions#tabline#buffer_nr_show=1
+"let g:airline#extensions#tabline#buffer_nr_show     =1
 
 
 """"""""""""""""""""""""""""""

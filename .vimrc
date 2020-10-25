@@ -1,14 +1,14 @@
 set runtimepath+=~/.vim/.vim_runtime
 
 source ~/.vim/.vim_runtime/vimrcs/basic.vim
-source ~/.vim/.vim_runtime/vimrcs/filetypes.vim
+"source ~/.vim/.vim_runtime/vimrcs/extended.vim
+"source ~/.vim/.vim_runtime/vimrcs/filetypes.vim
 source ~/.vim/.vim_runtime/vimrcs/plugins_config.vim
-source ~/.vim/.vim_runtime/vimrcs/extended.vim
 
-try
-    source ~/.vim_runtime/my_configs.vim
-catch
-endtry
+"try
+"    source ~/.vim/.vim_runtime/my_configs.vim
+"catch
+"endtry
 
 " VU    vundle
 " AU    auto_file_head
@@ -101,6 +101,7 @@ call vundle#begin()
     Plugin 'bling/vim-bufferline'
     "Plugin 'itchyny/lightline.vim'
     Plugin 'vim-airline/vim-airline'
+    Plugin 'dstein64/vim-startuptime'
     Plugin 'vim-airline/vim-airline-themes'
     "Bundle 'NERDTree'
     Bundle 'taglist.vim'

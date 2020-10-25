@@ -134,9 +134,9 @@ set showmatch
 set mat=2
 
 " Properly disable sound on errors on MacVim
-if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
-endif
+"if has("gui_macvim")
+"    autocmd GUIEnter * set vb t_vb=
+"endif
 
 
 " Add a bit extra margin to the left
@@ -267,19 +267,30 @@ noremap <C-k> <C-W>k
 noremap <C-h> <C-W>h
 noremap <C-l> <C-W>l
 
-" normal 模式下使用 bl 列出 Buffer 列表
-nnoremap <silent> bs :ls<CR>
-" normal 模式下使用 bo 打开一个新 Buffer
-"nnoremap <silent> <C-t> :enew<CR>
+" 使用 bl 列出 Buffer 列表
+"nnoremap <silent> bs :ls<CR>
+"inoremap <silent> bs <ESC>:ls<CR>
+"vnoremap <silent> bs <ESC>:ls<CR>
+" 使用 Ctrl + t 打开一个新 Buffer
 nnoremap <silent> <C-t> :enew<CR>
-" normal 模式下使用 bn 切换到下一个 Buffer
+inoremap <silent> <C-t> <ESC>:enew<CR>
+vnoremap <silent> <C-t> <ESC>:enew<CR>
+" 使用 bn 切换到下一个 Buffer
 nnoremap <silent> <C-n> :bnext<CR>
-" normal 模式下使用 bn 切换到上一个 Buffer
+inoremap <silent> <C-n> <ESC>:bnext<CR>
+vnoremap <silent> <C-n> <ESC>:bnext<CR>
+" 使用 bn 切换到上一个 Buffer
 nnoremap <silent> <C-p> :bpre<CR>
-" normal 模式下使用 bd 关闭当前 Buffer
-nnoremap <silent> <C-d> :bdel<CR>
-" normal 模式下使用 bd 关闭所有 Buffer
-nnoremap <silent> <C-a> :bufdo bd<CR>
+inoremap <silent> <C-p> <ESC>:bpre<CR>
+vnoremap <silent> <C-p> <ESC>:bpre<CR>
+" 使用 bd 保存并关闭当前 Buffer
+nnoremap <silent> <leader>dd :w<CR>:bdel<CR>
+inoremap <silent> <leader>dd <ESC>:w<CR>:bdel<CR>
+vnoremap <silent> <leader>dd <ESC>:w<CR>:bdel<CR>
+" 使用 bd 关闭所有 Buffer
+nnoremap <silent> <leader>da :bufdo bd<CR>
+inoremap <silent> <leader>da <ESC>:bufdo bd<CR>
+vnoremap <silent> <leader>da <ESC>:bufdo bd<CR>
 " Close the current buffer
 "map <leader>bd :Bclose<cr>:tabclose<cr>gT
 
@@ -349,18 +360,19 @@ map 0 ^
 "  vmap <D-k> <M-k>
 "endif
 
+" 保存时删除尾随空格
 " Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
-
-if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
-endif
+"fun! CleanExtraSpaces()
+"    let save_cursor = getpos(".")
+"    let old_query = getreg('/')
+"    silent! %s/\s\+$//e
+"    call setpos('.', save_cursor)
+"    call setreg('/', old_query)
+"endfun
+"
+"if has("autocmd")
+"    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+"endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
