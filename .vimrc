@@ -36,8 +36,6 @@ let mapleader = ","
 " <leader> + 7r  C++17 编译并运行
 " <leader> + tl  TagList
 " <leader> + nt  NERDTree
-" <leader> + y   关闭 YCM 
-" <leader> + Y   开启 YCM
 "" <leader> + n   显示行号(用于开启 taglisg 的行号)
 
 "      按键映射      "  MAP
@@ -57,9 +55,9 @@ inoremap <silent><leader>q <ESC>:x<CR>
 vnoremap <silent><leader>q <ESC>:x<CR>
 
 "复制全文到系统剪切板
-noremap <silent><C-y> ggv<S-g>y<C-o><C-o> 
-inoremap <silent><C-y> <ESC>ggv<S-g>y<C-o><C-o> 
-vnoremap <silent><C-y> <ESC>ggv<S-g>y<C-o><C-o> 
+noremap <silent><leader>y ggv<S-g>$y<C-o><C-o> 
+inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
+vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
 
 "解决 O 卡顿
 set noesckeys
@@ -404,7 +402,6 @@ func SetTitle()
             call append(line(".")+9, "int main() {")
             call append(line(".")+10, "    return 0;")
             call append(line(".")+11, "}")
-            call append(line(".")+12, "")
 
         elseif &filetype == 'cpp'
             call append(line(".")+7, "#include <cstdio>")
@@ -414,7 +411,6 @@ func SetTitle()
             call append(line(".")+11, "int main() {")
             call append(line(".")+12, "    return 0;")
             call append(line(".")+13, "}")
-            call append(line(".")+14, "")
         endif
     endif
 endfunc

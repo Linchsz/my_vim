@@ -275,19 +275,23 @@ noremap <C-l> <C-W>l
 nnoremap <silent> <C-t> :enew<CR>
 inoremap <silent> <C-t> <ESC>:enew<CR>
 vnoremap <silent> <C-t> <ESC>:enew<CR>
-" 使用 bn 切换到下一个 Buffer
+" 使用 Ctrl + n 切换到下一个 Buffer
 nnoremap <silent> <C-n> :bnext<CR>
 inoremap <silent> <C-n> <ESC>:bnext<CR>
 vnoremap <silent> <C-n> <ESC>:bnext<CR>
-" 使用 bn 切换到上一个 Buffer
+" 使用 Ctrl + p 切换到上一个 Buffer
 nnoremap <silent> <C-p> :bpre<CR>
 inoremap <silent> <C-p> <ESC>:bpre<CR>
 vnoremap <silent> <C-p> <ESC>:bpre<CR>
-" 使用 bd 保存并关闭当前 Buffer
+" 使用 dd 保存并关闭当前 Buffer
 nnoremap <silent> <leader>dd :w<CR>:bdel<CR>
 inoremap <silent> <leader>dd <ESC>:w<CR>:bdel<CR>
 vnoremap <silent> <leader>dd <ESC>:w<CR>:bdel<CR>
-" 使用 bd 关闭所有 Buffer
+" 使用 dq 保存并关闭当前 Buffer
+nnoremap <silent> <leader>dq :w<CR>:bdel<CR>
+inoremap <silent> <leader>dq <ESC>:w<CR>:bdel<CR>
+vnoremap <silent> <leader>dq <ESC>:w<CR>:bdel<CR>
+" 使用 da 关闭所有 Buffer
 nnoremap <silent> <leader>da :bufdo bd<CR>
 inoremap <silent> <leader>da <ESC>:bufdo bd<CR>
 vnoremap <silent> <leader>da <ESC>:bufdo bd<CR>
