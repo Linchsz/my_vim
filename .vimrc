@@ -64,8 +64,8 @@ set noesckeys
 "该法存在问题, 在第一行无法往上开新行
 "nnoremap <silent>O ko
 
-nnoremap <silent>j gj
-nnoremap <silent>k gk
+nnoremap j gj
+nnoremap k gk
 nnoremap yj yj
 nnoremap yk yk
 nnoremap dj dj
