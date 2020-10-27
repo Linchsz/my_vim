@@ -86,42 +86,54 @@ nnoremap dd dd
 " :Rename newFile.txt 将正在编辑的文件重命名为 newFile.txt
 :command! -nargs=1 Rename let tpname = expand('%:t') | saveas <args> | edit <args> | call delete(expand(tpname))
 
-" vundle 环境设置
-""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" vim-plug 环境设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "去除vi一致性
 set nocompatible
-filetype off     "vundle 需要 off
-set rtp+=~/.vim/bundle/Vundle.vim
-" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
-call vundle#begin()
-    Plugin 'gmarik/Vundle.vim'
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'jiangmiao/auto-pairs'
-    Plugin 'bling/vim-bufferline'
-    "Plugin 'itchyny/lightline.vim'
-    Plugin 'vim-airline/vim-airline'
-    Plugin 'dstein64/vim-startuptime'
-    Plugin 'vim-airline/vim-airline-themes'
-    "Bundle 'NERDTree'
-    Bundle 'taglist.vim'
-    " 模糊搜索
-    Bundle 'ctrlpvim/ctrlp.vim'
-    "  模糊搜索当前文件中所有函数
-    Bundle 'tacahiroy/ctrlp-funky'
-    Bundle 'Valloric/YouCompleteMe'
+"filetype off
+call plug#begin('~/.vim/plugged')
+"Plug 'konfekt/fastfold'
+Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+augroup loadNerdtree
+autocmd!
+autocmd VimEnter * silent! autocmd! FileExplorer
+autocmd BufEnter,BufNew *
+          \  if isdirectory(expand('<amatch>'))
+          \|   call plug#load('nerdtree')
+          \|   call nerdtree#checkForBrowse(expand("<amatch>"))
+          \| endif
+augroup END
+"Plug 'tpope/vim-fugitive', ( 'on': [] )
+Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
+Plug 'jiangmiao/auto-pairs', { 'on': [] }
+Plug 'bling/vim-bufferline', { 'on': [] }
+Plug 'tacahiroy/ctrlp-funky', { 'on': [] }
+"Plug 'itchyny/lightline.vim'
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer',  'for': ['c', 'cpp'] }
+Plug 'Valloric/YouCompleteMe', { 'on': [] }
+Plug 'vim-scripts/taglist.vim', { 'on': ['TlistToggle', 'TlistUpdate'] }
+Plug 'vim-airline/vim-airline', { 'on': [] }
+Plug 'vim-airline/vim-airline-themes', { 'on': [] }
 
-    " 在此行上面放置插件列表  VUNDLE 
-"   常用命令
-"   :PluginList       - 查看已经安装的插件
-"   :PluginInstall    - 安装插件
-"   :PluginUpdate     - 更新插件
-"   :PluginSearch     - 搜索插件，例如 :PluginSearch xml就能搜到xml相关的插件
-"   :PluginClean      - 删除插件，把安装插件对应行删除，然后执行这个命令即可
-"   h: vundle         - 获取帮助
-" 插件列表结束
-call vundle#end()
+" 插件列表
+call plug#end()
+
+" 优化 vim 启动速度
+" 100 毫秒后调用 LoadPlug, 且只调用一次, 见 `:h timer_start()`
+call timer_start(100, 'LoadPlug')
+function! LoadPlug(timer) abort
+  call plug#load('ctrlp.vim')
+  call plug#load('auto-pairs')
+  call plug#load('ctrlp-funky')
+"  call plug#load('vim-fugitive')
+  call plug#load('YouCompleteMe')
+  call plug#load('vim-bufferline')
+  call plug#load('vim-airline-themes')
+  call plug#load('vim-airline')
+endfunction
 filetype plugin indent on       "taglist 插件需要 on
-""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 "开启文件类型检查, 并且载入与该类型对应的缩进规则
@@ -140,7 +152,7 @@ set mouse=a
 
 " 基于缩进或语法进行代码折叠
 "set foldmethod=indent
-set foldmethod=syntax
+"set foldmethod=syntax
 
 "启动 vim 时关闭折叠代码
 set nofoldenable
@@ -358,9 +370,9 @@ func SetComment()
     call append(line(".")+1, " *        Author: Lin Chen")
     call append(line(".")+2, " *          Mail: mr.linchsz@gmail.com")
     call append(line(".")+3, " *        Create: ".strftime("%Y-%m-%d %H:%M:%S")) 
-    call append(line(".")+4, " * Last Modified: ".strftime("%Y-%m-%d %H:%M:%S"))
-    call append(line(".")+5, " *************************************************/")  
-    call append(line(".")+6, "")
+"    call append(line(".")+4, " * Last Modified: ".strftime("%Y-%m-%d %H:%M:%S"))
+    call append(line(".")+4, " *************************************************/")  
+    call append(line(".")+5, "")
 endfunc
 " 加入shell, Makefile注释
 func SetComment_sh()
@@ -409,30 +421,30 @@ func SetTitle()
             call append(line(".")+11, "}")
 
         elseif &filetype == 'cpp'
-            call append(line(".")+7, "#include <cstdio>")
-            call append(line(".")+8, "#include <iostream>")
-            call append(line(".")+9, "using namespace std;")
-            call append(line(".")+10, "")
-            call append(line(".")+11, "int main() {")
-            call append(line(".")+12, "    return 0;")
-            call append(line(".")+13, "}")
+            call append(line(".")+6, "#include <cstdio>")
+"            call append(line(".")+7, "#include <iostream>")
+            call append(line(".")+7, "using namespace std;")
+            call append(line(".")+8, "")
+            call append(line(".")+9, "int main() {")
+            call append(line(".")+10, "    return 0;")
+            call append(line(".")+11, "}")
         endif
     endif
 endfunc
 
-" 创建新文件时光标自动移动到 12 行
-autocmd BufNewFile * normal 12G
+" 创建新文件时光标自动移动到 10 行
+autocmd BufNewFile * normal 10G
 ""实现上面函数中的，Last modified功能
-autocmd BufWrite,BufWritePre,FileWritePre  *.cpp    ks|call LastModified()|'s  
-func LastModified()
-    if line("$") > 20
-        let l = 20
-    else 
-        let l = line("$")
-    endif
-    exe "1,".l."g/Last Modified: /s/Last Modified: .*/Last Modified:".
-                \strftime(" %Y-%m-%d %H:%M:%S") . "/e"
-endfunc
+"autocmd BufWrite,BufWritePre,FileWritePre  *.cpp    ks|call LastModified()|'s  
+"func LastModified()
+"    if line("$") > 20
+"        let l = 20
+"    else 
+"        let l = line("$")
+"    endif
+"    exe "1,".l."g/Last Modified: /s/Last Modified: .*/Last Modified:".
+"                \strftime(" %Y-%m-%d %H:%M:%S") . "/e"
+"endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " CO    color

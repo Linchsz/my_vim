@@ -1,5 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =5
+let g:netrw_dirhistcnt =8
+let g:netrw_dirhist_8='/Users/linchen/Desktop/Practice/FHQ Treap'
+let g:netrw_dirhist_7='/Users/linchen/Desktop/Practice/FHQ Treap/P3391'
+let g:netrw_dirhist_6='/Users/linchen/Desktop/Practice/FHQ Treap'
 let g:netrw_dirhist_5='/Users/linchen'
 let g:netrw_dirhist_4='/Users/linchen/Desktop/Practice/Splay'
 let g:netrw_dirhist_3='/Users/linchen'
@@ -7,6 +10,3 @@ let g:netrw_dirhist_2='/Users/linchen/Desktop/Practice/Splay/P3369'
 let g:netrw_dirhist_1='/Users/linchen/Desktop/Practice/Treap'
 let g:netrw_dirhist_0='/Users/linchen/Desktop/Terminal/2020 China Collegiate Programming Contest Qinhuangdao Site-重现赛'
 let g:netrw_dirhist_9='/Users/linchen/Desktop/Practice/dpx堆排序'
-let g:netrw_dirhist_8='/Users/linchen/Desktop/Practice/xxty线性同余方程/zxzsj最小整数解'
-let g:netrw_dirhist_7='/Users/linchen/Desktop/Practice/xxty线性同余方程'
-let g:netrw_dirhist_6='/Users/linchen/Desktop/Practice'

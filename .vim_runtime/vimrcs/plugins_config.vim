@@ -33,7 +33,7 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 """"""""""""""""""""""""""""""
 " => AirLine
 """"""""""""""""""""""""""""""
-"let g:airline_theme="molokai" 
+"let g:airline_theme                            ="molokai" 
 let g:airline_theme                            ='bubblegum'
 let g:airline_powerline_fonts                  = 1
 if !exists('g:airline_symbols')
@@ -76,9 +76,9 @@ let g:airline#extensions#branch#displayed_head_limit = 10
 "set tags='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
 " 在 vim 保存文件时自动更新 ctags
-au FileType {c,cpp} au BufWritePost <buffer> silent ! [ -e tags ] &&
-    \ ( awk -F'\t' '$2\!="%:gs/'/'\''/"{print}' tags ; ctags -f- '%:gs/'/'\''/' )
-    \ | sort -t$'\t' -k1,1 -o tags.new && mv tags.new tags
+"au FileType {c,cpp} au BufWritePost <buffer> silent ! [ -e tags ] &&
+"    \ ( awk -F'\t' '$2\!="%:gs/'/'\''/"{print}' tags ; ctags -f- '%:gs/'/'\''/' )
+"    \ | sort -t$'\t' -k1,1 -o tags.new && mv tags.new tags
 "
 " ctags 命令
 " $ ctags –R *                      更新当前目录下的所有文件的 ctags (常用)
@@ -151,7 +151,7 @@ let g:NERDTreeWinSize=35
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " 关闭 NERDTree，当没有文件打开的时候
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 " 按键映射
 " <leader>nt 打开 nerdtree 窗口
 noremap <silent><leader>nt :NERDTreeToggle<CR>
@@ -227,7 +227,7 @@ let g:ycm_cache_omnifunc=0
 let g:ycm_complete_in_strings = 1
 let g:ycm_seed_identifiers_with_syntax=1 "补全关键字 
 " 离开插入模式后自动关闭预览窗口"
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " 回车即选中当前项"
 "inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
 " 上下左右键行为"
@@ -287,9 +287,13 @@ let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 "" Quickly find and open a file in the current working directory
 "" Quickly find and open a buffer
-map <leader>fb :CtrlPBuffer<cr>
+nnoremap <leader>fb :CtrlPBuffer<cr>
+inoremap <leader>fb <ESC>:CtrlPBuffer<cr>
+vnoremap <leader>fb <ESC>:CtrlPBuffer<cr>
 "" Quickly find and open a recently opened file
-map <leader>fu :CtrlPMRU<CR>
+nnoremap <leader>fu :CtrlPMRU<CR>
+inoremap <leader>fu <ESC>:CtrlPMRU<CR>
+vnoremap <leader>fu <ESC>:CtrlPMRU<CR>
 "let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 ""  快捷键
 "" <leader> + fc  模糊搜索当前目录及其子目录下的所有文件
