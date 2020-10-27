@@ -220,7 +220,7 @@ set undofile
 set expandtab
 
 " Be smart when using tabs ;)
-"set smarttab
+set smarttab
 
 " 1 tab == 4 spaces
 " 在文本上按下>>(增加一级缩进)、<<(取消一级缩进)或者==(取消全部缩进)时,每一级的字符数
