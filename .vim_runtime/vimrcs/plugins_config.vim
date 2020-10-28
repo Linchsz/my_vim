@@ -200,7 +200,7 @@ vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
 "noremap <silent><leader>Y :let g:ycm_auto_trigger=1<CR>  
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<BS>"
-inoremap <expr><BS> pumvisible() ? "<ESC>:call neocomplete#close_popup()<CR>a<BS>" : "<BS>"
+"inoremap <expr><BS> pumvisible() ? "<ESC>:call neocomplete#close_popup()<CR>a<BS>" : "<BS>"
 " 默认配置文件路径"
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'       "配置全局路径
 "log"
