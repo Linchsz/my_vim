@@ -111,7 +111,7 @@ Plug 'bling/vim-bufferline', { 'on': [] }
 Plug 'tacahiroy/ctrlp-funky', { 'on': [] }
 "Plug 'itchyny/lightline.vim'
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer',  'for': ['c', 'cpp'] }
-Plug 'Valloric/YouCompleteMe', { 'on': [] }
+Plug 'ycm-core/YouCompleteMe', { 'on': [] }
 Plug 'vim-scripts/taglist.vim', { 'on': ['TlistToggle', 'TlistUpdate'] }
 Plug 'vim-airline/vim-airline', { 'on': [] }
 Plug 'vim-airline/vim-airline-themes', { 'on': [] }
