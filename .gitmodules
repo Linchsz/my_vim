@@ -1,0 +1,30 @@
+[submodule "plugged/vim-cpp-enhanced-highlight"]
+	path = plugged/vim-cpp-enhanced-highlight
+	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
+[submodule "plugged/YouCompleteMe"]
+	path = plugged/YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe.git
+[submodule "plugged/auto-pairs"]
+	path = plugged/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "plugged/ctrlp-funky"]
+	path = plugged/ctrlp-funky
+	url = https://github.com/tacahiroy/ctrlp-funky.git
+[submodule "plugged/ctrlp.vim"]
+	path = plugged/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule "plugged/nerdtree"]
+	path = plugged/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule "plugged/vim-bufferline"]
+	path = plugged/vim-bufferline
+	url = https://github.com/bling/vim-bufferline.git
+[submodule "plugged/vim-airline"]
+	path = plugged/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "plugged/vim-airline-themes"]
+	path = plugged/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "plugged/taglist.vim"]
+	path = plugged/taglist.vim
+	url = https://github.com/vim-scripts/taglist.vim.git

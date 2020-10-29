@@ -104,18 +104,17 @@ autocmd BufEnter,BufNew *
           \|   call nerdtree#checkForBrowse(expand("<amatch>"))
           \| endif
 augroup END
-"Plug 'tpope/vim-fugitive', ( 'on': [] )
-Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
 Plug 'jiangmiao/auto-pairs'
-"Plug 'jiangmiao/auto-pairs', { 'on': [] }
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
+"Plug 'tpope/vim-fugitive', { 'on': [] }
 Plug 'bling/vim-bufferline', { 'on': [] }
 Plug 'tacahiroy/ctrlp-funky', { 'on': [] }
-"Plug 'itchyny/lightline.vim'
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer',  'for': ['c', 'cpp'] }
 Plug 'ycm-core/YouCompleteMe', { 'on': [] }
-Plug 'vim-scripts/taglist.vim', { 'on': ['TlistToggle', 'TlistUpdate'] }
 Plug 'vim-airline/vim-airline', { 'on': [] }
 Plug 'vim-airline/vim-airline-themes', { 'on': [] }
+Plug 'vim-scripts/taglist.vim', { 'on': ['TlistToggle', 'TlistUpdate'] }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer',  'for': ['c', 'cpp'] }
 
 " 插件列表
 call plug#end()
@@ -124,17 +123,18 @@ call plug#end()
 " 100 毫秒后调用 LoadPlug, 且只调用一次, 见 `:h timer_start()`
 call timer_start(100, 'LoadPlug')
 function! LoadPlug(timer) abort
-  call plug#load('ctrlp.vim')
-"  call plug#load('auto-pairs')
-  call plug#load('ctrlp-funky')
 "  call plug#load('vim-fugitive')
+  call plug#load('ctrlp.vim')
+  call plug#load('ctrlp-funky')
   call plug#load('YouCompleteMe')
   call plug#load('vim-bufferline')
   call plug#load('vim-airline-themes')
   call plug#load('vim-airline')
 endfunction
 filetype plugin indent on       "taglist 插件需要 on
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-cpp-enhanced-highlight 插件增加支持的 STL 容器类型, 将该类型追加进 cpp.vim 即可
+" vim ~/.vim/plugged/vim-cpp-enhanced-highlight/after/syntax/cpp.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 "开启文件类型检查, 并且载入与该类型对应的缩进规则

@@ -148,6 +148,7 @@ set foldcolumn=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 "语法高亮
+syntax enable
 syntax on
 
 " Enable 256 colors palette in Gnome Terminal
