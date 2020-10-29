@@ -1,5 +1,5 @@
-# Clone [my_vim]  
-```
+# Clone [my_vim](https://github.com/Linchsz/my_vim ) 
+```bash
 $ cd ~
 $ git clone --recursive https://github.com/Linchsz/my_vim.git
 $ mkdir .vim
@@ -9,33 +9,33 @@ $ cd .vim
 $ ln -sf `pwd`/.vimrc ~/.vimrc
 ```
 __________
-# Install [homebrew]
-```
+# Install [homebrew](https://brew.sh)
+```bash
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 __________
-# Install [vim-plug]
-```
+# Install [vim-plug](https://github.com/junegunn/vim-plug )
+```bash
 $ brew install vim-plug
 ```
 __________
-# Install [powerline fonts]  
-( To support [vim-airline] plugin )  
-```
+# Install [powerline fonts](https://github.com/powerline/fonts )  
+( To support [vim-airline](https://github.com/vim-airline/vim-airline) plugin )  
+```bash
 $ git clone https://github.com/powerline/fonts.git
 $ ./install.sh
 ```
 __________
 # Make sure your vim support python3  
-( To support [YouCompleteMe] plugin )  
-```
+( To support [YouCompleteMe](https://github.com/vim-airline/vim-airline) plugin )  
+```bash
 $ vim --version
 ```
 If you see `-python3/dyn`  
 You must **recompile your vim** to support python3
 ### Recompile your vim
-Click [here] to download vim8.1
-```
+Click [here](https://codeload.github.com/vim/vim/tar.gz/v8.1.0197 ) to download vim8.1
+```bash
 # Uninstall your current vim
 $ brew uninstall vim
 
@@ -68,6 +68,12 @@ $ ./configure \
 # Compile and install
 $ make && make install
 
+# configure: error: could not configure lua
+# If you encounter this error, check the lua path
+$ which lua
+# If lua not found, install lua
+$ brew install lua
+
 $ /usr/local/vim8/bin/vim --version
 # Make sure you can see +python3/dyn
 
@@ -82,17 +88,9 @@ $ ln -s /usr/local/vim8/bin/vim /usr/local/bin/vim
 $ vim --version
 ```
 __________
-# Compile [YouCompleteMe] plugin  
+# Compile [YouCompleteMe](https://github.com/vim-airline/vim-airline) plugin  
 
-```
+```bash
 $ cd ~/.vim/plugged/YouCompleteMe
 $ <Your python3 path> install.py
 ```
-
-[homebrew]: https://brew.sh
-[my_vim]: https://github.com/Linchsz/my_vim
-[vim-plug]: https://github.com/junegunn/vim-plug
-[powerline fonts]: https://github.com/powerline/fonts
-[vim-airline]: https://github.com/vim-airline/vim-airline
-[YouCompleteMe]: https://github.com/ycm-core/YouCompleteMe
-[here]: https://codeload.github.com/vim/vim/tar.gz/v8.1.0197
