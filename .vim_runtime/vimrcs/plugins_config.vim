@@ -242,31 +242,31 @@ let g:ycm_seed_identifiers_with_syntax=1 "补全关键字
 """"""""""""""""""""""""""""""
 " 设置要自动配对的符号
 "let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'} 
-" 添加要自动配对的符号<>
+"" 添加要自动配对的符号<>
 "let g:AutoPairs['<']='>' 
-" 设置要自动配对的符号, 默认为g:AutoPairs, 可以通过自动命令来对不同文件类型设置不同自动匹配对符号
+"" 设置要自动配对的符号, 默认为g:AutoPairs, 可以通过自动命令来对不同文件类型设置不同自动匹配对符号
 "let b:AutoPairs = g:AutoParis 
-" 设置插件打开/关闭的快捷键, 默认为ALT+p
+"" 设置插件打开/关闭的快捷键, 默认为ALT+p
 "let g:AutoPairsShortcutToggle = '<M-p>' 
-" 设置自动为文本添加圆括号的快捷键, 默认为ALT+e
+"" 设置自动为文本添加圆括号的快捷键, 默认为ALT+e
 "let g:AutoPairsShortcutFastWrap = '<M-e>' 
-" 设置调到下一层括号对的快捷键, 默认为ALT+n
+"" 设置调到下一层括号对的快捷键, 默认为ALT+n
 "let g:AutoPairsShortcutJump = '<M-n>' 
-" 设置撤销飞行模式的快捷键, 默认为ALT+b
+"" 设置撤销飞行模式的快捷键, 默认为ALT+b
 "let g:AutoPairsShortcutBackInsert = '<M-b>' 
-" 把BACKSPACE键映射为删除括号对和引号, 默认为1
+"" 把BACKSPACE键映射为删除括号对和引号, 默认为1
 "let g:AutoPairsMapBS = 1 
-" 把ctrl+h键映射为删除括号对和引号, 默认为1
+"" 把ctrl+h键映射为删除括号对和引号, 默认为1
 "let g:AutoPairsMapCh = 1 
-" 把ENTER键映射为换行并缩进, 默认为1
+"" 把ENTER键映射为换行并缩进, 默认为1
 "let g:AutoPairsMapCR = 1 
-" 当g:AutoPairsMapCR为1时, 且文本位于窗口底部时, 自动移到窗口中间
+"" 当g:AutoPairsMapCR为1时, 且文本位于窗口底部时, 自动移到窗口中间
 "let g:AutoPairsCenterLine = 1 
-" 把SPACE键映射为在括号两侧添加空格, 默认为1
+"" 把SPACE键映射为在括号两侧添加空格, 默认为1
 "let g:AutoPairsMapSpace = 1 
-" 启用飞行模式, 默认为0
+"" 启用飞行模式, 默认为0
 "let g:AutoPairsFlyMode = 0 
-" 启用跳出多行括号对, 默认为1, 为0则只能跳出同一行的括号
+"" 启用跳出多行括号对, 默认为1, 为0则只能跳出同一行的括号
 "let g:AutoPairsMultilineClose = 1 
 
 

@@ -106,7 +106,8 @@ autocmd BufEnter,BufNew *
 augroup END
 "Plug 'tpope/vim-fugitive', ( 'on': [] )
 Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
-Plug 'jiangmiao/auto-pairs', { 'on': [] }
+Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs', { 'on': [] }
 Plug 'bling/vim-bufferline', { 'on': [] }
 Plug 'tacahiroy/ctrlp-funky', { 'on': [] }
 "Plug 'itchyny/lightline.vim'
@@ -124,7 +125,7 @@ call plug#end()
 call timer_start(100, 'LoadPlug')
 function! LoadPlug(timer) abort
   call plug#load('ctrlp.vim')
-  call plug#load('auto-pairs')
+"  call plug#load('auto-pairs')
   call plug#load('ctrlp-funky')
 "  call plug#load('vim-fugitive')
   call plug#load('YouCompleteMe')
