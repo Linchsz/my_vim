@@ -54,6 +54,11 @@ nnoremap <silent><leader>q :x<CR>
 inoremap <silent><leader>q <ESC>:x<CR>
 vnoremap <silent><leader>q <ESC>:x<CR>
 
+"选中全文"
+nnoremap <silent><leader>v ggv<S-g>$
+inoremap <silent><leader>v <ESC>ggv<S-g>$
+vnoremap <silent><leader>v <ESC>ggv<S-g>$
+
 "复制全文到系统剪切板
 nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o> 
 inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
