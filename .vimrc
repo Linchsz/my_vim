@@ -75,7 +75,7 @@ nnoremap yj yj
 nnoremap yk yk
 nnoremap dj dj
 nnoremap dk dk
-nnoremap dd dd  
+"nnoremap dd dd  
 "映射 dd 避免因映射 dj 和 dk 造成 d 卡顿 
 " Remap VIM 0 to first non-blank character
 
@@ -110,6 +110,8 @@ autocmd BufEnter,BufNew *
           \| endif
 augroup END
 Plug 'jiangmiao/auto-pairs'
+"Plug 'kshenoy/vim-signature'
+Plug 'scrooloose/nerdcommenter'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
 "Plug 'tpope/vim-fugitive', { 'on': [] }

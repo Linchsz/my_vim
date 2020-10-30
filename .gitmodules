@@ -28,3 +28,6 @@
 [submodule "plugged/taglist.vim"]
 	path = plugged/taglist.vim
 	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule "plugged/nerdcommenter"]
+	path = plugged/nerdcommenter
+	url = https://github.com/kshenoy/vim-signature.git

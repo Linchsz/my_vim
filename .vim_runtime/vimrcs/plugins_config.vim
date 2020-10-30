@@ -16,6 +16,53 @@ call pathogen#helptags()
 
 
 """"""""""""""""""""""""""""""
+" => Nerdcommenter
+""""""""""""""""""""""""""""""
+" [count] <Leader> cc NERDCommenterComment
+" 注释掉在可视模式下选择的当前行或文本
+
+" [count] <Leader> cn NERDCommenterNested
+" 与<Leader> cc相同, 但会强制嵌套
+
+" [count] <Leader> c<space> NERDCommenterToggle
+" 切换所选行的注释状态
+" 如果选择的最顶部行已注释, 所有选定行均未注释, 反之亦然
+
+" [count] <Leader> cm NERDCommenterMinimal
+" 仅使用一组多部分定界符对给定的行进行注释
+
+" [count] <Leader> ci NERDCommenterInvert
+" 分别切换所选行的评论状态
+
+" [count] <Leader> cs NERDCommenterSexy
+" Comments out the selected lines ``sexily''
+
+" [count] <Leader> cy NERDCommenterYank
+" 与<Leader> cc相同, 只是首先删除了注释行
+
+" <Leader> c$ NERDCommenterToEOL
+" 将当前行从光标注释到行尾
+
+" <Leader> cA NERDCommenterAppend
+" 在行尾添加注释定界符, 并在两行之间进入插入模式
+
+" NERDCommenterInsert
+" 在当前光标位置添加注释定界符, 并在它们之间插入
+" 默认情况下处于禁用状态
+
+" <Leader> ca NERDCommenterAltDelims
+" 切换到另一组定界符
+
+" [count] <Leader> cl NERDCommenterAlignLeft
+" [count] <Leader> cb NERDCommenterAlignBoth
+" 与 NERDCommenterComment 相同, 不同之处在于分隔符在
+" 左侧（<Leader> cl）或两侧（<Leader> cb）
+
+" [count] <Leader> cu NERDCommenterUncomment
+" 取消注释选定的行
+
+
+""""""""""""""""""""""""""""""
 " => BufferLine
 """"""""""""""""""""""""""""""
 let g:airline#extensions#tabline#buffer_idx_mode = 1
