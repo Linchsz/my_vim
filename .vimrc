@@ -111,7 +111,7 @@ autocmd BufEnter,BufNew *
 augroup END
 Plug 'jiangmiao/auto-pairs'
 "Plug 'kshenoy/vim-signature'
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
 "Plug 'tpope/vim-fugitive', { 'on': [] }
