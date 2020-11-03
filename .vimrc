@@ -381,9 +381,9 @@ let @y=":%s/\"*\"\/\\\\\"/g\<CR>\<BS>,2$hvlly,1gg"
 " @y 作用 : 将 "???" 改为 \"???\" 并复制 ")
 let @r='$pj'
 " @r 作用 : 给 auto_head.cpp 行尾加上 ")
-let @1="ggvG$di#include <cstdio>\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
+let @1="\<ESC>8GvG$di#include <cstdio>\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
 " @1 作用 : 更换自动文件头模版 1
-let @2="@1kiusing namespace std;\<CR>\<ESC>j^"
+let @2="\<ESC>8GvG$di#include <cstdio>\<CR>using namespace std;\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
 " @2 作用 : 更换自动文件头模版 2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
