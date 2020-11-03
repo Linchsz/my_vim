@@ -365,6 +365,30 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
+" Micro Comment
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" auto_head.cpp 放自动插入文件头的模版 cpp 文件
+" auto_head.vim 放 call append(line(".")+n, "")
+" 使用方式
+" 将 auto_head.vim 放在 buffer2 运行 gg
+" 将 auto_head.cpp 放在 buffer1 运行 gg
+" 然后依次运行 100@l @y 100@r  再将 "r" 改为 \"r\"
+" 即可将 auto_head.cpp 中的模版变为 vimrc 可执行形式
+let @l=',2y3f"j,1Pj|'
+" @w 作用 : 给 auto_head.cpp 行首加上 auto_head.vim 的 call append(line(".")+?, "
+" 宏命令 100@l 处理 100 行
+let @y=":%s/\"*\"\/\\\\\"/g\<CR>\<BS>,2$hvlly,1gg"
+" @y 作用 : 将 "???" 改为 \"???\" 并复制 ")
+let @r='$pj'
+" @r 作用 : 给 auto_head.cpp 行尾加上 ")
+let @1="ggvG$di#include <cstdio>\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
+" @1 作用 : 更换自动文件头模版 1
+let @2="@1kiusing namespace std;\<ESC>j^"
+" @2 作用 : 更换自动文件头模版 2
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
 " 自动生成文件头 AUTO
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 当新建 .h .c .hpp .cpp .mk .sh等文件时自动调用SetTitle 函数
@@ -393,21 +417,6 @@ func SetComment_sh()
     call setline(10, "#================================================================")
     call setline(11, "")
 endfunc
-
-" auto_head.cpp 放自动插入文件头的模版 cpp 文件
-" auto_head.vim 放 call append(line(".")+n, "")
-" 使用方式
-" 将 auto_head.vim 放在 buffer2 运行 gg
-" 将 auto_head.cpp 放在 buffer1 运行 gg
-" 然后依次运行 100@l @y 100@r  再将 "r" 改为 \"r\"
-" 即可将 auto_head.cpp 中的模版变为 vimrc 可执行形式
-let @l=',2y3f"j,1Pj|'
-" @w 作用 : 给 auto_head.cpp 行首加上 auto_head.vim 的 call append(line(".")+?, "
-" 宏命令 100@l 处理 100 行
-let @y=":%s/\"*\"\/\\\\\"/g\<CR>\<BS>,2$hvlly,1gg"
-" @y 作用 : 将 "???" 改为 \"???\" 并复制 ")
-let @r='$pj'
-" @r 作用 : 给 auto_head.cpp 行尾加上 ")
 
 " 定义函数SetTitle，自动插入文件头
 func SetTitle()
@@ -443,12 +452,6 @@ func SetTitle()
             call append(line(".")+11, "}")
         elseif &filetype == 'cpp'
 
-            "call append(line(".")+6, "#include <cstdio>")
-            "call append(line(".")+7, "using namespace std;")
-            "call append(line(".")+8, "")
-            "call append(line(".")+9, "int main() {")
-            "call append(line(".")+10, "    return 0;")
-            "call append(line(".")+11, "}")
             call append(line(".")+6, "#include <map>")
             call append(line(".")+7, "#include <set>")
             call append(line(".")+8, "#include <cmath>")
