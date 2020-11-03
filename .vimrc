@@ -383,7 +383,7 @@ let @r='$pj'
 " @r 作用 : 给 auto_head.cpp 行尾加上 ")
 let @1="ggvG$di#include <cstdio>\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
 " @1 作用 : 更换自动文件头模版 1
-let @2="@1kiusing namespace std;\<ESC>j^"
+let @2="@1kiusing namespace std;\<CR>\<ESC>j^"
 " @2 作用 : 更换自动文件头模版 2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
