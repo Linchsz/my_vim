@@ -248,7 +248,6 @@ vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 "让 vim 的补全菜单行为与一般 IDE 一致(参考VimTip1228)
 set completeopt=longest,menu 
-"set completeopt=menu,menuone 
 "let g:ycm_server_keep_logfiles=1
 " 设置YCM的日志记录级别, 可以是debug, info, warning, error, critical. debug 是最详细的
 let g:ycm_sever_log_level='debug'
@@ -267,11 +266,11 @@ let g:ycm_autoclose_preview_window_after_insertion = 0
 " 关闭 YCM 附带的语法检查
 "let g:ycm_show_diagnostics_ui = 0
 " 设置错误标志
-let g:ycm_error_symbol = '>>'
+"let g:ycm_error_symbol = '>>'
 " 设置警告标志
-let g:ycm_warning_symbol = '>*'
+"let g:ycm_warning_symbol = '>*'
 " 打开 location-list 来显示警告和错误的信息
-nnoremap <C-p> :YcmDiags<CR>
+nnoremap <C-k> :YcmDiags<CR>
 " 是否开启语义补全
 let g:ycm_seed_identifiers_with_syntax=1
 "force recomile with syntastic
@@ -379,11 +378,11 @@ vnoremap <leader>fu <ESC>:CtrlPMRU<CR>
 """""""""""""""""""""""""""""""
 nnoremap <Leader>ff :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
-"nnoremap <C-]> :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+nnoremap <C-p> :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_funky_syntax_highlight = 1
 let g:ctrlp_extensions = ['funky']
-"" <leader>ff 进入当前文件的函数列表搜索
-"" Ctrl + ]   搜索当前光标下单词对应的函数
+" <leader>ff 进入当前文件的函数列表搜索
+" Ctrl + p   搜索当前光标下单词对应的函数
 
 
 """"""""""""""""""""""""""""""
