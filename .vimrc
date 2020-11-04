@@ -74,7 +74,7 @@ nnoremap yj yj
 nnoremap yk yk
 nnoremap dj dj
 nnoremap dk dk
-"nnoremap dd dd  
+nnoremap dd dd  
 "映射 dd 避免因映射 dj 和 dk 造成 d 卡顿 
 " Remap VIM 0 to first non-blank character
 
@@ -108,15 +108,16 @@ autocmd BufEnter,BufNew *
           \|   call nerdtree#checkForBrowse(expand("<amatch>"))
           \| endif
 augroup END
+"Plug 'grep.vim'
 Plug 'jiangmiao/auto-pairs'
 "Plug 'kshenoy/vim-signature'
-Plug 'preservim/nerdcommenter'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
 "Plug 'tpope/vim-fugitive', { 'on': [] }
 Plug 'bling/vim-bufferline', { 'on': [] }
 Plug 'tacahiroy/ctrlp-funky', { 'on': [] }
 Plug 'ycm-core/YouCompleteMe', { 'on': [] }
+Plug 'preservim/nerdcommenter', { 'on': [] }
 Plug 'vim-airline/vim-airline', { 'on': [] }
 Plug 'vim-airline/vim-airline-themes', { 'on': [] }
 Plug 'vim-scripts/taglist.vim', { 'on': ['TlistToggle', 'TlistUpdate'] }
@@ -132,6 +133,7 @@ function! LoadPlug(timer) abort
 "  call plug#load('vim-fugitive')
   call plug#load('ctrlp.vim')
   call plug#load('ctrlp-funky')
+  call plug#load('nerdcommenter')
   call plug#load('YouCompleteMe')
   call plug#load('vim-bufferline')
   call plug#load('vim-airline-themes')
@@ -474,7 +476,7 @@ func SetTitle()
             call append(line(".")+25, "#define re rend()")
             call append(line(".")+26, "#define bg begin()")
             call append(line(".")+27, "#define rb rbegin()")
-            call append(line(".")+28, "#define gc getchar()")
+            call append(line(".")+28, "#define gc() getchar()")
             call append(line(".")+29, "#define pc(x) putchar(x)")
             call append(line(".")+30, "#define pb(x) push_back(x)")
             call append(line(".")+31, "#define all(x) x.begin(), x.end()")
@@ -536,7 +538,7 @@ endfunc
 "" 创建新文件时光标自动移动到 8 行
 "autocmd BufNewFile * normal 10G
 "" 创建新文件时光标自动移动到 78 行
-autocmd BufNewFile * normal 78G
+autocmd BufNewFile * normal 80G
 ""实现上面函数中的，Last modified功能
 "autocmd BufWrite,BufWritePre,FileWritePre  *.cpp    ks|call LastModified()|'s  
 "func LastModified()

@@ -241,28 +241,48 @@ vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""
 " => YouCompleteMe
 """"""""""""""""""""""""""""""
-" turn off YCM (目前与复制全文的映射冲突)
-"nnoremap <silent><leader>y :let g:ycm_auto_trigger=0<CR> 
-" turn on YCM
-"noremap <silent><leader>Y :let g:ycm_auto_trigger=1<CR>  
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<BS>"
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<BS>"
 "inoremap <expr><BS> pumvisible() ? "<ESC>:call neocomplete#close_popup()<CR>a<BS>" : "<BS>"
 " 默认配置文件路径"
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'       "配置全局路径
-"log"
+let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+"让 vim 的补全菜单行为与一般 IDE 一致(参考VimTip1228)
+set completeopt=longest,menu 
+"set completeopt=menu,menuone 
 "let g:ycm_server_keep_logfiles=1
-"let g:ycm_sever_log_level='debug'
+" 设置YCM的日志记录级别, 可以是debug, info, warning, error, critical. debug 是最详细的
+let g:ycm_sever_log_level='debug'
 " 打开vim时不再询问是否加载ycm_extra_conf.py配置"
-"let g:ycm_confirm_extra_conf=0
-"set completeopt=longest,menu
+let g:ycm_confirm_extra_conf=0
 " python解释器路径"
 let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
-let g:ycm_python_binary_path = '/usr/local/bin/python3'   "python 环境
-" 是否开启语义补全"
+" python 环境
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
+" 开启 YCM 基于标签引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" 为当前补全选项在 vim 顶部增加预览窗口, 用来显示函数原型等信息
+let g:ycm_add_preview_to_completeopt = 0
+" 离开插入模式后自动关闭预览窗口
+let g:ycm_autoclose_preview_window_after_insertion = 0
+" 关闭 YCM 附带的语法检查
+"let g:ycm_show_diagnostics_ui = 0
+" 设置错误标志
+let g:ycm_error_symbol = '>>'
+" 设置警告标志
+let g:ycm_warning_symbol = '>*'
+" 打开 location-list 来显示警告和错误的信息
+nnoremap <C-p> :YcmDiags<CR>
+" 是否开启语义补全
 let g:ycm_seed_identifiers_with_syntax=1
+"force recomile with syntastic
+"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+" 设置YCM的语义触发器的关键字
+let g:ycm_semantic_triggers = {'c' : ['->', '.'],'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s','re!\[.*\]\s'],'ocaml' : ['.', '#'],'cpp,objcpp' : ['->', '.', '::'],'perl' : ['->'],'php' : ['->', '::'],'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],'ruby' : ['.', '::'],'lua' : ['.', ':'],'erlang' : [':'],}
 " 是否在注释中也开启补全"
 let g:ycm_complete_in_comments=1
+"在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1
+"注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 " 开始补全的字符数"
 let g:ycm_min_num_of_chars_for_completion=2
@@ -272,16 +292,18 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_cache_omnifunc=0
 " 字符串中也开启补全"
 let g:ycm_complete_in_strings = 1
-let g:ycm_seed_identifiers_with_syntax=1 "补全关键字 
-" 离开插入模式后自动关闭预览窗口"
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+ "补全关键字
+let g:ycm_seed_identifiers_with_syntax=1
+" 跳转到定义处
+nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" 关闭补全列表
+let g:ycm_key_list_stop_completion = ['<C-y>']
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
+" <TAB>, <Down>, <C-n>
+" <S-TAB>, <Up>, <C-p>
 " 回车即选中当前项"
 "inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
-" 上下左右键行为"
-"inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
-"inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
-"inoremap <expr> <PageDown> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
-"inoremap <expr> <PageUp>   pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'\
 
 
 """"""""""""""""""""""""""""""
@@ -357,7 +379,7 @@ vnoremap <leader>fu <ESC>:CtrlPMRU<CR>
 """""""""""""""""""""""""""""""
 nnoremap <Leader>ff :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
-nnoremap <C-]> :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"nnoremap <C-]> :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_funky_syntax_highlight = 1
 let g:ctrlp_extensions = ['funky']
 "" <leader>ff 进入当前文件的函数列表搜索
