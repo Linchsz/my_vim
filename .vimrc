@@ -103,10 +103,10 @@ autocmd BufEnter,BufNew *
           \|   call nerdtree#checkForBrowse(expand("<amatch>"))
           \| endif
 augroup END
-Plug 'dense-analysis/ale'
 Plug 'jiangmiao/auto-pairs'
 "Plug 'kshenoy/vim-signature'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'dense-analysis/ale', { 'on': [] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
 "Plug 'tpope/vim-fugitive', { 'on': [] }
 Plug 'bling/vim-bufferline', { 'on': [] }
@@ -126,6 +126,7 @@ call plug#end()
 call timer_start(100, 'LoadPlug')
 function! LoadPlug(timer) abort
 "  call plug#load('vim-fugitive')
+  call plug#load('ale')
   call plug#load('ctrlp.vim')
   call plug#load('ctrlp-funky')
   call plug#load('nerdcommenter')
