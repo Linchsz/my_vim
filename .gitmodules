@@ -31,3 +31,6 @@
 [submodule "plugged/nerdcommenter"]
 	path = plugged/nerdcommenter
 	url = https://github.com/preservim/nerdcommenter
+[submodule "plugged/ale"]
+	path = plugged/ale
+	url = https://github.com/dense-analysis/ale

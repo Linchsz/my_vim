@@ -4,7 +4,6 @@ source ~/.vim/.vim_runtime/vimrcs/basic.vim
 "source ~/.vim/.vim_runtime/vimrcs/extended.vim
 "source ~/.vim/.vim_runtime/vimrcs/filetypes.vim
 source ~/.vim/.vim_runtime/vimrcs/plugins_config.vim
-
 "try
 "    source ~/.vim/.vim_runtime/my_configs.vim
 "catch
@@ -37,37 +36,33 @@ let mapleader = ","
 " <leader> + nt  NERDTree
 "" <leader> + n   显示行号(用于开启 taglisg 的行号)
 
-"      按键映射      "  MAP
-
+"      按键映射      "
 "显示行号
 "map <leader>n :set nu<CR>
-
 " 快速保存  <leader> + w
 nnoremap <silent><leader>w :w!<CR><ESC>
 inoremap <silent><leader>w <ESC>:w!<CR><ESC>
 vnoremap <silent><leader>w <ESC>:w!<CR><ESC>
-
 " 保存并退出按键映射为 <leader> + q
 " :x 和 ZZ 命令与 :wq 类似, 但不会写入没有改变的文件, 并且更快
 nnoremap <silent><leader>q :x<CR>
 inoremap <silent><leader>q <ESC>:x<CR>
 vnoremap <silent><leader>q <ESC>:x<CR>
-
 "选中全文"
 nnoremap <silent><leader>v ggv<S-g>$
 inoremap <silent><leader>v <ESC>ggv<S-g>$
 vnoremap <silent><leader>v <ESC>ggv<S-g>$
-
 "复制全文到系统剪切板
 nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o> 
 inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
 vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
+"命令窗口清屏
+nnoremap <silent><C-l> :!clear<CR><CR>
 
+nnoremap 0 ^
+nnoremap - $
 "解决 O 卡顿
 set noesckeys
-"该法存在问题, 在第一行无法往上开新行
-"nnoremap <silent>O ko
-
 nnoremap j gj
 nnoremap k gk
 nnoremap yj yj
@@ -85,7 +80,7 @@ nnoremap dd dd
 "nnoremap o oa<BS>
 ""normal mode mapping for O
 "nnoremap O Oa<BS>
-"改进方案, 按 <S-s> 即可在正确缩进位置插入, 所以不用进行按键映射了
+"改进方案, 按 S 即可在正确缩进位置插入, 所以不用进行按键映射了
 "
 " :Rename newFile.txt 将正在编辑的文件重命名为 newFile.txt
 :command! -nargs=1 Rename let tpname = expand('%:t') | saveas <args> | edit <args> | call delete(expand(tpname))
@@ -108,7 +103,7 @@ autocmd BufEnter,BufNew *
           \|   call nerdtree#checkForBrowse(expand("<amatch>"))
           \| endif
 augroup END
-"Plug 'grep.vim'
+Plug 'dense-analysis/ale'
 Plug 'jiangmiao/auto-pairs'
 "Plug 'kshenoy/vim-signature'
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -206,7 +201,7 @@ set t_vb=
 set tm=500
 
 "居中
-set so=999
+"set so=999
 "居中相关映射
 "noremap j gjzz
 "noremap k gkzz

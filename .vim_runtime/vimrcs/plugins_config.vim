@@ -16,48 +16,73 @@ call pathogen#helptags()
 
 
 """"""""""""""""""""""""""""""
+" => Ale
+""""""""""""""""""""""""""""""
+" 始终开启标志列
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+" 自定义 error 和 warning 图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+" 在 vim 自带的状态栏中整合 ale
+let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+" 显示 Linter 名称, 出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" 避免 Java 安装在中文系统上时错误和警告信息乱码
+let g:ale_java_javac_options = '-encoding UTF-8  -J-Duser.language=en'
+" 只在保存文件时检查
+let g:ale_lint_on_text_changed = 'never'
+" 打开文件时不进行检查
+let g:ale_lint_on_enter = 0
+" 普通模式下, <leader>k 前往上一个错误或警告, <leader>j 前往下一个错误或警告
+nmap <leader>k <Plug>(ale_previous_wrap)
+nmap <leader>j <Plug>(ale_next_wrap)
+" <Leader>s 触发 / 关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+" <Leader>d 查看错误或警告的详细信息
+" nmap <Leader>d :ALEDetail<CR>
+
+
+""""""""""""""""""""""""""""""
 " => Nerdcommenter
 """"""""""""""""""""""""""""""
+" 注释前加一个空格
+let g:NERDSpaceDelims=1
+" 取消注释时启用尾随空白的修剪
+let g:NERDTrimTrailingWhitespace = 1
+imap <leader><leader> <ESC><leader>c<space>
+nmap <leader><leader> <leader>c<space>
+vmap <leader><leader> <leader>c<space>
 " [count] <Leader> cc NERDCommenterComment
 " 注释掉在可视模式下选择的当前行或文本
-
 " [count] <Leader> cn NERDCommenterNested
 " 与<Leader> cc相同, 但会强制嵌套
-
 " [count] <Leader> c<space> NERDCommenterToggle
 " 切换所选行的注释状态
 " 如果选择的最顶部行已注释, 所有选定行均未注释, 反之亦然
-
 " [count] <Leader> cm NERDCommenterMinimal
 " 仅使用一组多部分定界符对给定的行进行注释
-
 " [count] <Leader> ci NERDCommenterInvert
 " 分别切换所选行的评论状态
-
 " [count] <Leader> cs NERDCommenterSexy
 " Comments out the selected lines ``sexily''
-
 " [count] <Leader> cy NERDCommenterYank
 " 与<Leader> cc相同, 只是首先删除了注释行
-
 " <Leader> c$ NERDCommenterToEOL
 " 将当前行从光标注释到行尾
-
 " <Leader> cA NERDCommenterAppend
 " 在行尾添加注释定界符, 并在两行之间进入插入模式
-
 " NERDCommenterInsert
 " 在当前光标位置添加注释定界符, 并在它们之间插入
 " 默认情况下处于禁用状态
-
 " <Leader> ca NERDCommenterAltDelims
 " 切换到另一组定界符
-
 " [count] <Leader> cl NERDCommenterAlignLeft
 " [count] <Leader> cb NERDCommenterAlignBoth
 " 与 NERDCommenterComment 相同, 不同之处在于分隔符在
 " 左侧（<Leader> cl）或两侧（<Leader> cb）
-
 " [count] <Leader> cu NERDCommenterUncomment
 " 取消注释选定的行
 
@@ -264,7 +289,7 @@ let g:ycm_add_preview_to_completeopt = 0
 " 离开插入模式后自动关闭预览窗口
 let g:ycm_autoclose_preview_window_after_insertion = 0
 " 关闭 YCM 附带的语法检查
-"let g:ycm_show_diagnostics_ui = 0
+let g:ycm_show_diagnostics_ui = 0
 " 设置错误标志
 "let g:ycm_error_symbol = '>>'
 " 设置警告标志
@@ -378,7 +403,7 @@ vnoremap <leader>fu <ESC>:CtrlPMRU<CR>
 """""""""""""""""""""""""""""""
 nnoremap <Leader>ff :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
-nnoremap <C-p> :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+nnoremap <leader>fw :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_funky_syntax_highlight = 1
 let g:ctrlp_extensions = ['funky']
 " <leader>ff 进入当前文件的函数列表搜索
