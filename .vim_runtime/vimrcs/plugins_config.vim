@@ -295,7 +295,7 @@ let g:ycm_show_diagnostics_ui = 0
 " 设置警告标志
 "let g:ycm_warning_symbol = '>*'
 " 打开 location-list 来显示警告和错误的信息
-nnoremap <C-k> :YcmDiags<CR>
+" nnoremap <C-k> :YcmDiags<CR>
 " 是否开启语义补全
 let g:ycm_seed_identifiers_with_syntax=1
 "force recomile with syntastic

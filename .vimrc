@@ -57,7 +57,7 @@ nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o>
 inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
 vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
 "命令窗口清屏
-nnoremap <silent><C-l> :!clear<CR><CR>
+nnoremap <silent><leader>l :!clear<CR><CR>
 
 nnoremap 0 ^
 nnoremap - $
