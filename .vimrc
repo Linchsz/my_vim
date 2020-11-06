@@ -42,14 +42,22 @@ set tm=700
 "显示行号
 "map <leader>n :set nu<CR>
 " 快速保存  <leader> + w
-nnoremap <silent><leader>w :w!<CR><ESC>
-inoremap <silent><leader>w <ESC>:w!<CR><ESC>
-vnoremap <silent><leader>w <ESC>:w!<CR><ESC>
+nnoremap <silent><leader>w :w<CR><ESC>
+inoremap <silent><leader>w <ESC>:w<CR><ESC>
+vnoremap <silent><leader>w <ESC>:w<CR><ESC>
+" 保存所有窗口
+nnoremap <silent><leader>aw :wa<CR><ESC>
+inoremap <silent><leader>aw <ESC>:wa<CR><ESC>
+vnoremap <silent><leader>aw <ESC>:wa<CR><ESC>
 " 保存并退出按键映射为 <leader> + q
 " :x 和 ZZ 命令与 :wq 类似, 但不会写入没有改变的文件, 并且更快
 nnoremap <silent><leader>q :x<CR>
 inoremap <silent><leader>q <ESC>:x<CR>
 vnoremap <silent><leader>q <ESC>:x<CR>
+" 保存并退出所有窗口
+nnoremap <silent><leader>aq :xa<CR>
+inoremap <silent><leader>aq <ESC>:xa<CR>
+vnoremap <silent><leader>aq <ESC>:xa<CR>
 "选中全文"
 nnoremap <silent><leader>v ggv<S-g>$
 inoremap <silent><leader>v <ESC>ggv<S-g>$
@@ -60,6 +68,41 @@ inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o>
 vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o>
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
+
+" 使用 Ctrl + t 打开一个新 Buffer, 然后输入文件名创建新文件
+nnoremap <C-t> :enew<CR>:e 
+inoremap <C-t> <ESC>:enew<CR>:e 
+vnoremap <C-t> <ESC>:enew<CR>:e 
+" 使用 Ctrl + n 切换到下一个 Buffer
+nnoremap <silent> <C-n> :bn<CR>
+inoremap <silent> <C-n> <ESC>:bn<CR>
+vnoremap <silent> <C-n> <ESC>:bn<CR>
+" 使用 Ctrl + p 切换到上一个 Buffer
+nnoremap <silent> <C-p> :bpre<CR>
+inoremap <silent> <C-p> <ESC>:bp<CR>
+vnoremap <silent> <C-p> <ESC>:bp<CR>
+" 使用 dd 保存并关闭当前 Buffer
+nnoremap <silent> <leader>dd :w<CR>:Bclose<cr>:tabclose<cr>gT
+inoremap <silent> <leader>dd <ESC>:w<CR>:Bclose<cr>:tabclose<cr>gT
+vnoremap <silent> <leader>dd <ESC>:w<CR>:Bclose<cr>:tabclose<cr>gT
+" 使用 dq 强制关闭当前 Buffer
+nnoremap <silent> <leader>dq :Bclose<cr>:tabclose<cr>gT
+inoremap <silent> <leader>dq <ESC>:Bclose<cr>:tabclose<cr>gT
+vnoremap <silent> <leader>dq <ESC>:Bclose<cr>:tabclose<cr>gT
+" 使用 da 关闭所有 Buffer
+nnoremap <silent> <leader>da :bufdo bd<CR>
+inoremap <silent> <leader>da <ESC>:bufdo bd<CR>
+vnoremap <silent> <leader>da <ESC>:bufdo bd<CR>
+" 使用 bs 列出 Buffer 列表
+"nnoremap <silent> bs :ls<CR>
+"inoremap <silent> bs <ESC>:ls<CR>
+"vnoremap <silent> bs <ESC>:ls<CR>
+" Useful mappings for managing tabs
+"map <leader>tn :tabnew<cr>
+"map <leader>to :tabonly<cr>
+"map <leader>tc :tabclose<cr>
+"map <leader>tm :tabmove 
+"map <leader>t<leader> :tabnext 
 
 nnoremap 0 ^
 " nnoremap - $

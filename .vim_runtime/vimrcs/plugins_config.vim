@@ -15,6 +15,15 @@ call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
 call pathogen#helptags()
 
 
+" 在退出主编辑窗口后, 自动关闭其他分割窗口的插件(如 NERDTree), 并退出 vim
+autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+" 为配合以上自动关闭命令, 关闭当前 buffer 时需使用以下命令进行关闭
+" :Bclose<cr>:tabclose<cr>gT
+" 以上命令已被绑定为
+" <leader>dq 强制关闭当前 Buffer
+" <leader>da 关闭所有 Buffer
+
+
 """"""""""""""""""""""""""""""
 " => Ale
 """"""""""""""""""""""""""""""
@@ -223,7 +232,7 @@ let g:NERDTreeWinSize=35
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " 关闭 NERDTree，当没有文件打开的时候
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 " 按键映射
 " <leader>nt 打开 nerdtree 窗口
 noremap <silent><leader>nt :NERDTreeToggle<CR>
