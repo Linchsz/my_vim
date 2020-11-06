@@ -60,11 +60,11 @@ vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o>
 nnoremap <silent><leader>l :!clear<CR><CR>
 
 nnoremap 0 ^
-nnoremap - $
+" nnoremap - $
 "解决 O 卡顿
 set noesckeys
-nnoremap j gj
-nnoremap k gk
+" nnoremap j gj
+" nnoremap k gk
 nnoremap yj yj
 nnoremap yk yk
 nnoremap dj dj
@@ -184,7 +184,7 @@ set wrapmargin=2
 "set sidescrolloff=15
 
 "垂直滚动时,光标距离顶部/底部的位置(单位：行)
-set scrolloff=5
+set scrolloff=8
 
 "自动切换工作目录。这主要用在一个 Vim 会话之中打开多个文件的情况,默认的工作目录是打开的第一个文件的目录。该配置可以将工作目录自动切换到,正在编辑的文件的目录
 "set autochdir
@@ -203,15 +203,17 @@ set tm=500
 
 "居中
 "set so=999
+auto insertleave,cursormoved * normal! zz
 "居中相关映射
-"noremap j gjzz
-"noremap k gkzz
-"noremap n nzz
-"noremap <s-n> <s-n>zz
-"noremap * *zz
-"noremap # #zz
-"noremap <c-o> <c-o>zz
-"noremap <c-i> <c-i>zz
+" noremap G Gzz
+" noremap j gjzz
+" noremap k gkzz
+" noremap n nzz
+" noremap <s-n> <s-n>zz
+" noremap * *zz
+" noremap # #zz
+" noremap <c-o> <c-o>zz
+" noremap <c-i> <c-i>zz
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -366,23 +368,54 @@ endfunc
 " Micro Comment
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " auto_head.cpp 放自动插入文件头的模版 cpp 文件
-" auto_head.vim 放 call append(line(".")+n, "")
+" auto_head.vim 放 call setline(?, "")
 " 使用方式
 " 将 auto_head.vim 放在 buffer2 运行 gg
 " 将 auto_head.cpp 放在 buffer1 运行 gg
 " 然后依次运行 100@l @y 100@r  再将 "r" 改为 \"r\"
 " 即可将 auto_head.cpp 中的模版变为 vimrc 可执行形式
-let @l=',2y3f"j,1Pj|'
-" @w 作用 : 给 auto_head.cpp 行首加上 auto_head.vim 的 call append(line(".")+?, "
+let @l=',2yf"j,1Pj|'
+" @w 作用 : 给 auto_head.cpp 行首加上 auto_head.vim 的 call setline(?, "
 " 宏命令 100@l 处理 100 行
-let @y=":%s/\"*\"\/\\\\\"/g\<CR>\<BS>,2$hvlly,1gg"
-" @y 作用 : 将 "???" 改为 \"???\" 并复制 ")
+let @y=",2$hvlly,1gg:%s/\"r\"\/\\\\\"r\\\\\"\<CR>\<BS>"
+" @y 作用 : 将 "r" 改为 \"r\" 并复制 ")
+" 替换指令 %s/\"r\"/\\"r\\"
 let @r='$pj'
 " @r 作用 : 给 auto_head.cpp 行尾加上 ")
 let @1="\<ESC>8GvG$di#include <cstdio>\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
 " @1 作用 : 更换自动文件头模版 1
 let @2="\<ESC>8GvG$di#include <cstdio>\<CR>using namespace std;\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
 " @2 作用 : 更换自动文件头模版 2
+let @3="\<ESC>8GvG$d:call SetComment_RD()\<CR>30G"
+
+func SetComment_RD()
+    call setline(8, "#include <cstdio>")
+    call setline(9, "#include <cctype>")
+    call setline(10, "using namespace std;")
+    call setline(11, "")
+    call setline(12, "#define ri() rd<int>()")
+    call setline(13, "#define rl() rd<long long>()")
+    call setline(14, "")
+    call setline(15, "template <typename T>")
+    call setline(16, "inline T rd() {")
+    call setline(17, "    T x = 0, f = 1;")
+    call setline(18, "    char c = getchar();")
+    call setline(19, "    while (!isdigit(c)) {")
+    call setline(20, "        f = c == '-' ? -1 : 1;")
+    call setline(21, "        c = getchar();")
+    call setline(22, "    }")
+    call setline(23, "    while (isdigit(c)) {")
+    call setline(24, "        x = (x << 1) + (x << 3) + (c ^ 48);")
+    call setline(25, "        c = getchar();")
+    call setline(26, "    }")
+    call setline(27, "    return x * f;")
+    call setline(28, "}")
+    call setline(29, "")
+    call setline(30, "int main() {")
+    call setline(31, "    return 0;")
+    call setline(32, "}")
+    call setline(33, "")
+endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -393,27 +426,27 @@ let @2="\<ESC>8GvG$di#include <cstdio>\<CR>using namespace std;\<CR>\<CR>int mai
 autocmd BufNewFile *.[ch],*.hpp,*.cpp,Makefile,*.mk,*.sh exec ":call SetTitle()"
 " 加入注释
 func SetComment()
-    call setline(1,"/*************************************************")
-    call append(line("."), " *     File Name: ".expand("%:t"))
-    "    call append(line(".")+1, " *   Description: ")
-    call append(line(".")+1, " *        Author: Lin Chen")
-    call append(line(".")+2, " *          Mail: mr.linchsz@gmail.com")
-    call append(line(".")+3, " *        Create: ".strftime("%Y-%m-%d %H:%M:%S")) 
-"    call append(line(".")+4, " * Last Modified: ".strftime("%Y-%m-%d %H:%M:%S"))
-    call append(line(".")+4, " *************************************************/")  
-    call append(line(".")+5, "")
+    call setline(1, "/*************************************************")
+    call setline(2, " *     File Name: ".expand("%:t"))
+    "    call setline(1, " *   Description: ")
+    call setline(3, " *        Author: Lin Chen")
+    call setline(4, " *          Mail: mr.linchsz@gmail.com")
+    call setline(5, " *        Create: ".strftime("%Y-%m-%d %H:%M:%S")) 
+    "    call setline(4, " * Last Modified: ".strftime("%Y-%m-%d %H:%M:%S"))
+    call setline(6, " *************************************************/")  
+    call setline(7, "")
 endfunc
 " 加入shell, Makefile注释
 func SetComment_sh()
     call setline(3, "#================================================================")
     call setline(4, "#     File Name: ".expand("%:t"))
     "    call setline(5, "#   Description: ")
-    call setline(6, "#        Author: Lin Chen")
-    call setline(7, "#          Mail: mr.linchsz@gmail.com")
-    call setline(8, "#        Create: ".strftime("%Y-%m-%d %H:%M:%S")) 
-    call setline(9, "# Last Modified: ".strftime("%Y-%m-%d %H:%M:%S"))
-    call setline(10, "#================================================================")
-    call setline(11, "")
+    call setline(5, "#        Author: Lin Chen")
+    call setline(6, "#          Mail: mr.linchsz@gmail.com")
+    call setline(7, "#        Create: ".strftime("%Y-%m-%d %H:%M:%S")) 
+    call setline(8, "# Last Modified: ".strftime("%Y-%m-%d %H:%M:%S"))
+    call setline(9, "#================================================================")
+    call setline(10, "")
 endfunc
 
 " 定义函数SetTitle，自动插入文件头
@@ -429,111 +462,111 @@ func SetTitle()
     else
         call SetComment()
         if expand("%:e") == 'hpp'
-            call append(line(".")+7, "#ifndef _".toupper(expand("%:t:r"))."_H")
-            call append(line(".")+8, "#define _".toupper(expand("%:t:r"))."_H")
-            call append(line(".")+9, "#ifdef __cplusplus")
-            call append(line(".")+10, "extern \"C\"")
-            call append(line(".")+11, "{")
-            call append(line(".")+12, "#endif")
-            call append(line(".")+13, "")
-            call append(line(".")+14, "#ifdef __cplusplus")
-            call append(line(".")+15, "}")
-            call append(line(".")+16, "#endif")
-            call append(line(".")+17, "#endif //".toupper(expand("%:t:r"))."_H")
+            call setline(8, "#ifndef _".toupper(expand("%:t:r"))."_H")
+            call setline(9, "#define _".toupper(expand("%:t:r"))."_H")
+            call setline(10, "#ifdef __cplusplus")
+            call setline(11, "extern \"C\"")
+            call setline(12, "{")
+            call setline(13, "#endif")
+            call setline(14, "")
+            call setline(15, "#ifdef __cplusplus")
+            call setline(16, "}")
+            call setline(17, "#endif")
+            call setline(18, "#endif //".toupper(expand("%:t:r"))."_H")
         elseif expand("%:e") == 'h'
-            call append(line(".")+7, "#pragma once")
+            call setline(8, "#pragma once")
         elseif &filetype == 'c'
-            call append(line(".")+7, "#include <stdio.h>")
-            call append(line(".")+8, "")
-            call append(line(".")+9, "int main() {")
-            call append(line(".")+10, "    return 0;")
-            call append(line(".")+11, "}")
+            call setline(8, "#include <stdio.h>")
+            call setline(9, "")
+            call setline(10, "int main() {")
+            call setline(11, "    return 0;")
+            call setline(12, "}")
         elseif &filetype == 'cpp'
 
-            call append(line(".")+6, "#include <map>")
-            call append(line(".")+7, "#include <set>")
-            call append(line(".")+8, "#include <cmath>")
-            call append(line(".")+9, "#include <queue>")
-            call append(line(".")+10, "#include <stack>")
-            call append(line(".")+11, "#include <cstdio>")
-            call append(line(".")+12, "#include <cctype>")
-            call append(line(".")+13, "#include <vector>")
-            call append(line(".")+14, "#include <string>")
-            call append(line(".")+15, "#include <cstdlib>")
-            call append(line(".")+16, "#include <cstring>")
-            call append(line(".")+17, "#include <iostream>")
-            call append(line(".")+18, "#include <algorithm>")
-            call append(line(".")+19, "#include <unordered_map>")
-            call append(line(".")+20, "using namespace std;")
-            call append(line(".")+21, "")
-            call append(line(".")+22, "#define fi first")
-            call append(line(".")+23, "#define se second")
-            call append(line(".")+24, "#define ed end()")
-            call append(line(".")+25, "#define re rend()")
-            call append(line(".")+26, "#define bg begin()")
-            call append(line(".")+27, "#define rb rbegin()")
-            call append(line(".")+28, "#define gc() getchar()")
-            call append(line(".")+29, "#define pc(x) putchar(x)")
-            call append(line(".")+30, "#define pb(x) push_back(x)")
-            call append(line(".")+31, "#define all(x) x.begin(), x.end()")
-            call append(line(".")+32, "#define sor(x) sort(x.begin(), x.end())")
-            call append(line(".")+33, "#define uni(x) unique(x.begin(), x.end())")
-            call append(line(".")+34, "#define era(x) x.erase(unique(x.begin(),x.end()),x.end()")
-            call append(line(".")+35, "#define posl(x,v) (lower_bound(x.begin(),x.end(),v)-x.begin()")
-            call append(line(".")+36, "#define posu(x,v) (upper_bound(x.begin(),x.end(),v)-x.begin()")
-            call append(line(".")+37, "#define PQ(T) priority_queue<T, vector<T>, greater<T> >")
-            call append(line(".")+38, "#define repn(i, n) for (int i = 1; i <= (n); ++i)")
-            call append(line(".")+39, "#define rep(i, n) for (int i = 0; i < (n); ++i)")
-            call append(line(".")+40, "#define mem(x, a) memset(x, a, sizeof(x))")
-            call append(line(".")+41, "#define fre(x) freopen(x, \"r\", stdin)")
-            call append(line(".")+42, "#define ump(S, T) unordered_map<S, T>")
-            call append(line(".")+43, "#define wl(x) wr<long long>(x)")
-            call append(line(".")+44, "#define rl() rd<long long>()")
-            call append(line(".")+45, "#define wi(x) wr<int>(x)")
-            call append(line(".")+46, "#define ri() rd<int>()")
-            call append(line(".")+47, "")
-            call append(line(".")+48, "typedef long long ll;")
-            call append(line(".")+49, "typedef unsigned int uint;")
-            call append(line(".")+50, "typedef unsigned long long ull;")
-            call append(line(".")+51, "typedef pair<int, int> p;")
-            call append(line(".")+52, "typedef vector<int> vi;")
-            call append(line(".")+53, "typedef vector<vi> vvi;")
-            call append(line(".")+54, "typedef vector<ll> vl;")
-            call append(line(".")+55, "typedef vector<vl> vvl;")
-            call append(line(".")+56, "")
-            call append(line(".")+57, "//const int p = 13331;")
-            call append(line(".")+58, "const int INF = 0x7fffffff;")
-            call append(line(".")+59, "//const ll INF = 1ll << 63;")
-            call append(line(".")+60, "template <typename T>")
-            call append(line(".")+61, "inline T rd() {")
-            call append(line(".")+62, "    T x = 0, f = 1;")
-            call append(line(".")+63, "    char c = getchar();")
-            call append(line(".")+64, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
-            call append(line(".")+65, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
-            call append(line(".")+66, "    return x * f;")
-            call append(line(".")+67, "}")
-            call append(line(".")+68, "template <typename T>")
-            call append(line(".")+69, "inline void wr(T x) {")
-            call append(line(".")+70, "    T y = 1, len = 1;")
-            call append(line(".")+71, "    if (x < 0) x = -x, putchar('-');")
-            call append(line(".")+72, "    while (y <= x / 10) y = (y << 1) + (y << 3), ++len;")
-            call append(line(".")+73, "    for (; len; --len) putchar(x / y ^ 48), x %= y, y /= 10;")
-            call append(line(".")+74, "}")
-            call append(line(".")+75, "")
-            call append(line(".")+76, "int n, m, k, x, y, z, cnt;")
-            call append(line(".")+77, "")
-            call append(line(".")+78, "int main() {")
-            call append(line(".")+79, "    return 0;")
-            call append(line(".")+80, "}")
-            call append(line(".")+81, "")
+            call setline(8, "#include <map>")
+            call setline(9, "#include <set>")
+            call setline(10, "#include <cmath>")
+            call setline(11, "#include <queue>")
+            call setline(12, "#include <stack>")
+            call setline(13, "#include <cstdio>")
+            call setline(14, "#include <cctype>")
+            call setline(15, "#include <vector>")
+            call setline(16, "#include <string>")
+            call setline(17, "#include <cstdlib>")
+            call setline(18, "#include <cstring>")
+            call setline(19, "#include <iostream>")
+            call setline(20, "#include <algorithm>")
+            call setline(21, "#include <unordered_map>")
+            call setline(22, "using namespace std;")
+            call setline(23, "")
+            call setline(24, "#define fi first")
+            call setline(25, "#define se second")
+            call setline(26, "#define ed end()")
+            call setline(27, "#define re rend()")
+            call setline(28, "#define bg begin()")
+            call setline(29, "#define rb rbegin()")
+            call setline(30, "#define gc getchar()")
+            call setline(31, "#define pc(x) putchar(x)")
+            call setline(32, "#define pb(x) push_back(x)")
+            call setline(33, "#define all(x) x.begin(), x.end()")
+            call setline(34, "#define sor(x) sort(x.begin(), x.end())")
+            call setline(35, "#define uni(x) unique(x.begin(), x.end())")
+            call setline(36, "#define era(x) x.erase(unique(x.begin(),x.end()),x.end()")
+            call setline(37, "#define posl(x,v) (lower_bound(x.begin(),x.end(),v)-x.begin()")
+            call setline(38, "#define posu(x,v) (upper_bound(x.begin(),x.end(),v)-x.begin()")
+            call setline(39, "#define PQ(T) priority_queue<T, vector<T>, greater<T> >")
+            call setline(40, "#define repn(i, n) for (int i = 1; i <= (n); ++i)")
+            call setline(41, "#define rep(i, n) for (int i = 0; i < (n); ++i)")
+            call setline(42, "#define mem(x, a) memset(x, a, sizeof(x))")
+            call setline(43, "#define fre(x) freopen(x, \"r\", stdin)")
+            call setline(44, "#define ump(S, T) unordered_map<S, T>")
+            call setline(45, "#define wl(x) wr<long long>(x)")
+            call setline(46, "#define rl() rd<long long>()")
+            call setline(47, "#define wi(x) wr<int>(x)")
+            call setline(48, "#define ri() rd<int>()")
+            call setline(49, "")
+            call setline(50, "typedef long long ll;")
+            call setline(51, "typedef unsigned int uint;")
+            call setline(52, "typedef unsigned long long ull;")
+            call setline(53, "typedef pair<int, int> p;")
+            call setline(54, "typedef vector<int> vi;")
+            call setline(55, "typedef vector<vi> vvi;")
+            call setline(56, "typedef vector<ll> vl;")
+            call setline(57, "typedef vector<vl> vvl;")
+            call setline(58, "")
+            call setline(59, "//const int p = 13331;")
+            call setline(60, "const int INF = 0x7fffffff;")
+            call setline(61, "//const ll INF = 1ll << 63;")
+            call setline(62, "template <typename T>")
+            call setline(63, "inline T rd() {")
+            call setline(64, "    T x = 0, f = 1;")
+            call setline(65, "    char c = getchar();")
+            call setline(66, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
+            call setline(67, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
+            call setline(68, "    return x * f;")
+            call setline(69, "}")
+            call setline(70, "template <typename T>")
+            call setline(71, "inline void wr(T x) {")
+            call setline(72, "    T y = 1, len = 1;")
+            call setline(73, "    if (x < 0) x = -x, putchar('-');")
+            call setline(74, "    while (y <= x / 10) y = (y << 1) + (y << 3), ++len;")
+            call setline(75, "    for (; len; --len) putchar(x / y ^ 48), x %= y, y /= 10;")
+            call setline(76, "}")
+            call setline(77, "")
+            call setline(78, "int n, m, k, x, y, z, cnt;")
+            call setline(79, "")
+            call setline(80, "int main() {")
+            call setline(81, "    return 0;")
+            call setline(82, "}")
+            call setline(83, "")
 
         endif
     endif
 endfunc
 
-"" 创建新文件时光标自动移动到 8 行
+"" 创建新文件时光标自动移动到 10 行
 "autocmd BufNewFile * normal 10G
-"" 创建新文件时光标自动移动到 78 行
+"" 创建新文件时光标自动移动到 80 行
 autocmd BufNewFile * normal 80G
 ""实现上面函数中的，Last modified功能
 "autocmd BufWrite,BufWritePre,FileWritePre  *.cpp    ks|call LastModified()|'s  
