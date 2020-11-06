@@ -16,7 +16,7 @@ call pathogen#helptags()
 
 
 " 在退出主编辑窗口后, 自动关闭其他分割窗口的插件(如 NERDTree), 并退出 vim
-autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+" autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
 " 为配合以上自动关闭命令, 关闭当前 buffer 时需使用以下命令进行关闭
 " :Bclose<cr>:tabclose<cr>gT
 " 以上命令已被绑定为
@@ -214,6 +214,10 @@ autocmd BufWritePost *.cpp :TlistUpdate
 """"""""""""""""""""""""""""""
 " => NERDTree
 """"""""""""""""""""""""""""""
+" <leader>nt 打开 nerdtree 窗口
+noremap <silent><leader>nt :NERDTreeToggle<CR>
+inoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
+vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline = 1       " 高亮当前行
 let NERDTreeShowLineNumbers     = 1       " 显示行号
 " 忽略列表中的文件
@@ -222,22 +226,18 @@ let g:NERDTreeWinPos = "right"            " 在右侧栏显示
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
-"map <leader>nn :NERDTreeToggle<cr>
 "map <leader>nb :NERDTreeFromBookmark<Space>
-"map <leader>nf :NERDTreeFind<cr>
+" 找到当前 buffer 对应的目录
+map <leader>nf :NERDTreeFind<cr>
 " 启动 vim 时打开 NERDTree
 "autocmd vimenter * NERDTree
 " 当打开 VIM，没有指定文件时和打开一个目录时，打开 NERDTree
-"autocmd StdinReadPre * let s:std_in = 1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+" autocmd StdinReadPre * let s:std_in = 1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " 关闭 NERDTree，当没有文件打开的时候
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 " 按键映射
-" <leader>nt 打开 nerdtree 窗口
-noremap <silent><leader>nt :NERDTreeToggle<CR>
-inoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
-vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
 " <leader>tc 关闭当前的 tab
 "map <leader>tc :tabc<CR>
 " <leader>to 关闭所有其他的 tab
@@ -381,37 +381,49 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
     \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
     \ }
+"let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
+" 缓存文件存放路径
+" let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_match_window_bottom=1
 let g:ctrlp_max_height=15
 let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
-"" Quickly find and open a file in the current working directory
-"" Quickly find and open a buffer
-nnoremap <leader>fb :CtrlPBuffer<cr>
-inoremap <leader>fb <ESC>:CtrlPBuffer<cr>
-vnoremap <leader>fb <ESC>:CtrlPBuffer<cr>
-"" Quickly find and open a recently opened file
+" 默认使用 <文件名匹配> 模式进行模糊搜索
+let g:ctrlp_by_filename = 1
+nnoremap <leader>fb :CtrlPBuffer<CR>
+inoremap <leader>fb <ESC>:CtrlPBuffer<CR>
+vnoremap <leader>fb <ESC>:CtrlPBuffer<CR>
 nnoremap <leader>fu :CtrlPMRU<CR>
 inoremap <leader>fu <ESC>:CtrlPMRU<CR>
 vnoremap <leader>fu <ESC>:CtrlPMRU<CR>
-"let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
-""  快捷键
-"" <leader> + fc  模糊搜索当前目录及其子目录下的所有文件
-"" <leader> + fr  模糊搜索最近打开的文件(MRU)
-"" <leader> + fb 模糊搜索 buffer
-"" ctrl + j/k 进行上下选择
-"" ctrl + x 在当前窗口水平分屏打开文件
-"" ctrl + v 同上, 垂直分屏
-"" ctrl + t 在tab中打开
+nnoremap <leader>fa :CtrlPMixed<CR>
+inoremap <leader>fa <ESC>:CtrlPMixed<CR>
+vnoremap <leader>fa <ESC>:CtrlPMixed<CR>
+" Commands
+" <leader> + fc     进入查找文件模式, 模糊搜索当前目录及其子目录下的所有文件
+" <leader> + fb     进入查找缓冲区模式, 模糊搜索 buffer
+" <leader> + fu     进入查找 MRU 文件模式, 模糊搜索最近打开的文件(MRU)
+" <leader> + fa     同时搜索 文件、缓冲区 和 MRU 文件
+" Esc / <Ctrl-C>    退出 CTRL-P
+" F5                刷新当前操作路径下的文件缓存
+" <Ctrl-K/J>        在模糊搜索结果列表中上下移动 (当然也可以使用键盘上的上下方向键)
+" <Ctrl-F/B>        在 <查找文件> 、<查找缓冲区> 、<查找 MRU 文件> 几种模式间进行切换
+" <Ctrl-D>          在 <路径匹配> 和 <文件名匹配> 之间切换
+" <Ctrl-R>          在 <字符串模式> 和 <正则表达式模式> 之间切换
+" <Ctrl-T>          在新的 tab 中打开
+" <Ctrl-V>          垂直分割窗口打开
+" <Ctrl-X>          水平分割窗口打开
+" <Ctrl-P> / `      选择前 / 后一条历史记录
+" <Ctrl-Y>          当搜索的目标文件不存在时创建文件及父目录
+" <Ctrl-Z>          标记或取消标记多个文件, 标记多个文件后可以使用 <Ctrl-O> 同时打开多个文件
 
 
 """""""""""""""""""""""""""""""
 " => CTRL-P-Funky
 """""""""""""""""""""""""""""""
 nnoremap <Leader>ff :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
 nnoremap <leader>fw :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_funky_syntax_highlight = 1
 let g:ctrlp_extensions = ['funky']
