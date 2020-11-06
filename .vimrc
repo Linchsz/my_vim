@@ -181,10 +181,22 @@ set nu
 set wrapmargin=2
 
 "水平滚动时,光标距离行首或行尾的位置(单位：字符),该配置在不折行时比较有用
-"set sidescrolloff=15
+set sidescrolloff=15
 
-"垂直滚动时,光标距离顶部/底部的位置(单位：行)
-set scrolloff=8
+"垂直滚动时,光标距离顶部/底部的位置(单位：行), 999 可视为居中
+set scrolloff=999
+"居中
+" auto insertleave,cursormoved * normal! zz
+"居中相关映射
+" noremap G Gzz
+" noremap j gjzz
+" noremap k gkzz
+" noremap n nzz
+" noremap <s-n> <s-n>zz
+" noremap * *zz
+" noremap # #zz
+" noremap <c-o> <c-o>zz
+" noremap <c-i> <c-i>zz
 
 "自动切换工作目录。这主要用在一个 Vim 会话之中打开多个文件的情况,默认的工作目录是打开的第一个文件的目录。该配置可以将工作目录自动切换到,正在编辑的文件的目录
 "set autochdir
@@ -200,20 +212,6 @@ set t_vb=
 
 " <leader> 的 timeoutlen
 set tm=500
-
-"居中
-"set so=999
-auto insertleave,cursormoved * normal! zz
-"居中相关映射
-" noremap G Gzz
-" noremap j gjzz
-" noremap k gkzz
-" noremap n nzz
-" noremap <s-n> <s-n>zz
-" noremap * *zz
-" noremap # #zz
-" noremap <c-o> <c-o>zz
-" noremap <c-i> <c-i>zz
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -415,6 +413,10 @@ func SetComment_RD()
     call setline(31, "    return 0;")
     call setline(32, "}")
     call setline(33, "")
+    call setline(34, "")
+    call setline(35, "")
+    call setline(36, "")
+    call setline(37, "")
 endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -559,6 +561,10 @@ func SetTitle()
             call setline(81, "    return 0;")
             call setline(82, "}")
             call setline(83, "")
+            call setline(84, "")
+            call setline(85, "")
+            call setline(86, "")
+            call setline(87, "")
 
         endif
     endif
