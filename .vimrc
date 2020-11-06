@@ -24,6 +24,8 @@ endtry
 
 "设置前缀键为 ',' 即 <leader> = ,  LD
 let mapleader = ","
+" <leader> 的 timeoutlen
+set tm=700
 "  按键映射快捷键  "
 " <leader> + w   保存
 " <leader> + q   保存并退出
@@ -53,9 +55,9 @@ nnoremap <silent><leader>v ggv<S-g>$
 inoremap <silent><leader>v <ESC>ggv<S-g>$
 vnoremap <silent><leader>v <ESC>ggv<S-g>$
 "复制全文到系统剪切板
-nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o> 
-inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
-vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o> 
+nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o>
+inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o>
+vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o>
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
 
@@ -210,8 +212,6 @@ set visualbell
 " 当 vim 进行编辑时, 如果命令错误, 会发出警报, 该设置去掉警报
 set t_vb=
 
-" <leader> 的 timeoutlen
-set tm=500
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 
