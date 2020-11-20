@@ -1,5 +1,10 @@
 set runtimepath+=~/.vim/.vim_runtime
 
+"设置前缀键为 ,
+let mapleader = ","
+" <leader> 的 timeoutlen
+set tm=700
+
 source ~/.vim/.vim_runtime/vimrcs/basic.vim
 "source ~/.vim/.vim_runtime/vimrcs/extended.vim
 "source ~/.vim/.vim_runtime/vimrcs/filetypes.vim
@@ -22,10 +27,6 @@ try
 catch
 endtry
 
-"设置前缀键为 ',' 即 <leader> = ,  LD
-let mapleader = ","
-" <leader> 的 timeoutlen
-set tm=700
 "  按键映射快捷键  "
 " <leader> + w   保存
 " <leader> + q   保存并退出
@@ -66,13 +67,15 @@ vnoremap <silent><leader>v <ESC>ggv<S-g>$
 nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o>
 inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o>
 vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o>
+"显示命令窗口
+nnoremap <silent><leader>s :!<CR>
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
 
 " 使用 Ctrl + t 打开一个新 Buffer, 然后输入文件名创建新文件
-nnoremap <C-t> :enew<CR>:e 
-inoremap <C-t> <ESC>:enew<CR>:e 
-vnoremap <C-t> <ESC>:enew<CR>:e 
+nnoremap <C-e> :enew<CR>:e 
+inoremap <C-e> <ESC>:enew<CR>:e 
+vnoremap <C-e> <ESC>:enew<CR>:e 
 " 使用 Ctrl + n 切换到下一个 Buffer
 nnoremap <silent> <C-n> :bn<CR>
 inoremap <silent> <C-n> <ESC>:bn<CR>
@@ -104,19 +107,19 @@ vnoremap <silent> <leader>da <ESC>:bufdo bd<CR>
 "map <leader>tm :tabmove 
 "map <leader>t<leader> :tabnext 
 
-nnoremap 0 ^
-" nnoremap - $
 "解决 O 卡顿
 set noesckeys
-" nnoremap j gj
-" nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 nnoremap yj yj
 nnoremap yk yk
 nnoremap dj dj
 nnoremap dk dk
-nnoremap dd dd  
+" nnoremap dd dd
 "映射 dd 避免因映射 dj 和 dk 造成 d 卡顿 
 " Remap VIM 0 to first non-blank character
+nnoremap 0 ^
+" nnoremap - $
 
 "解决换行得到的自动缩进, 在退出插入模式而不添加任何内容时缩进消失
 ""insert mode mapping for <CR>
@@ -149,6 +152,7 @@ autocmd BufEnter,BufNew *
           \| endif
 augroup END
 Plug 'jiangmiao/auto-pairs'
+" Plug 'kshenoy/vim-signature', { 'on': [] }
 "Plug 'kshenoy/vim-signature'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'dense-analysis/ale', { 'on': [] }
@@ -171,9 +175,10 @@ call plug#end()
 call timer_start(100, 'LoadPlug')
 function! LoadPlug(timer) abort
 "  call plug#load('vim-fugitive')
-  call plug#load('ale')
   call plug#load('ctrlp.vim')
   call plug#load('ctrlp-funky')
+  " call plug#load('vim-signature')
+  call plug#load('ale')
   call plug#load('nerdcommenter')
   call plug#load('YouCompleteMe')
   call plug#load('vim-bufferline')
@@ -270,10 +275,10 @@ noremap <leader>er :call RunResult()<CR>
 nnoremap <leader>r :w<CR><ESC>:call CompileRun()<CR>
 inoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
 vnoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
-" <leader> + 7r  C++17 编译并运行
-nnoremap <leader>7r :w<CR><ESC>:call CompileRunCPP17()<CR>
-inoremap <leader>7r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
-vnoremap <leader>7r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
+" <leader> + 1r  C++17 编译并运行
+nnoremap <leader>1r :w<CR><ESC>:call CompileRunCPP17()<CR>
+inoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
+vnoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
 " <leader> + tr  编译运行并显示运行时间
 nnoremap <leader>tr :call CompileRunShowTime()<CR>
 inoremap <leader>tr <ESC>:call CompileRunShowTime()<CR>

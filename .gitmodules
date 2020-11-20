@@ -34,3 +34,6 @@
 [submodule "plugged/ale"]
 	path = plugged/ale
 	url = https://github.com/dense-analysis/ale
+[submodule "plugged/vim-signature"]
+	path = plugged/vim-signature
+	url = https://github.com/kshenoy/vim-signature
