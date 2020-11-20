@@ -67,8 +67,6 @@ vnoremap <silent><leader>v <ESC>ggv<S-g>$
 nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o>
 inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o>
 vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o>
-"显示命令窗口
-nnoremap <silent><leader>s :!<CR>
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
 
@@ -259,6 +257,11 @@ set visualbell
 
 " 当 vim 进行编辑时, 如果命令错误, 会发出警报, 该设置去掉警报
 set t_vb=
+
+" 记住上次编辑和浏览位置
+if has("autocmd")
+ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
