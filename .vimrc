@@ -64,9 +64,9 @@ nnoremap <silent><leader>v ggv<S-g>$
 inoremap <silent><leader>v <ESC>ggv<S-g>$
 vnoremap <silent><leader>v <ESC>ggv<S-g>$
 "复制全文到系统剪切板
-nnoremap <silent><leader>y ggv<S-g>$y<C-o><C-o>
-inoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o><C-o>
-vnoremap <silent><leader>y <ESC>ggv<S-g>$y<C-o>
+nnoremap <silent><leader>y muggv<S-g>$y`u
+inoremap <silent><leader>y <ESC>mujggv<S-g>$y`u
+vnoremap <silent><leader>y <ESC>mujggv<S-g>$y`u
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
 
@@ -116,7 +116,7 @@ nnoremap dk dk
 " nnoremap dd dd
 "映射 dd 避免因映射 dj 和 dk 造成 d 卡顿 
 " Remap VIM 0 to first non-blank character
-nnoremap 0 ^
+" nnoremap 0 ^
 " nnoremap - $
 
 "解决换行得到的自动缩进, 在退出插入模式而不添加任何内容时缩进消失
@@ -421,21 +421,23 @@ endfunc
 " 使用方式
 " 将 auto_head.vim 放在 buffer2 运行 gg
 " 将 auto_head.cpp 放在 buffer1 运行 gg
-" 然后依次运行 100@l @y 100@r  再将 "r" 改为 \"r\"
+" 然后依次运行 100@l @y 100@r
 " 即可将 auto_head.cpp 中的模版变为 vimrc 可执行形式
 let @l=',2yf"j,1Pj|'
-" @w 作用 : 给 auto_head.cpp 行首加上 auto_head.vim 的 call setline(?, "
+" @w : 给 auto_head.cpp 行首加上 auto_head.vim 的 call setline(?, "
 " 宏命令 100@l 处理 100 行
 let @y=",2$hvlly,1gg:%s/\"r\"\/\\\\\"r\\\\\"\<CR>\<BS>"
-" @y 作用 : 将 "r" 改为 \"r\" 并复制 ")
+" @y : 将 "r" 改为 \"r\" 并复制 ")
 " 替换指令 %s/\"r\"/\\"r\\"
 let @r='$pj'
-" @r 作用 : 给 auto_head.cpp 行尾加上 ")
-let @1="\<ESC>8GvG$di#include <cstdio>\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
-" @1 作用 : 更换自动文件头模版 1
-let @2="\<ESC>8GvG$di#include <cstdio>\<CR>using namespace std;\<CR>\<CR>int main() {\<CR>return 0;\<ESC>k^"
-" @2 作用 : 更换自动文件头模版 2
-let @3="\<ESC>8GvG$d:call SetComment_RD()\<CR>30G"
+" @r : 给 auto_head.cpp 行尾加上 ")
+let @1="\<ESC>8G\<S-v>78Gdi#include <cstdio>\<CR>\<ESC>"
+" @1 : 更换自动文件头模版 1
+let @2="\<ESC>8G\<S-v>78Gdi#include <cstdio>\<CR>using namespace std;\<CR>\<ESC>^"
+" @2 : 更换自动文件头模版 2
+let @3="\<ESC>8G\<S-v>Gd:call SetComment_RD()\<CR>30G"
+" @3 : 更换自动文件头模版 3
+let @f="\<ESC>ofreopen(\"\", \"r\", stdin);\<CR>// freopen(\"\", \"w\", stdout);\<ESC>k14hi"
 
 func SetComment_RD()
     call setline(8, "#include <cstdio>")
@@ -464,10 +466,12 @@ func SetComment_RD()
     call setline(31, "    return 0;")
     call setline(32, "}")
     call setline(33, "")
-    call setline(34, "")
+    call setline(34, "//")
     call setline(35, "")
     call setline(36, "")
     call setline(37, "")
+    call setline(38, "")
+    call setline(39, "")
 endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -571,51 +575,50 @@ func SetTitle()
             call setline(40, "#define repn(i, n) for (int i = 1; i <= (n); ++i)")
             call setline(41, "#define rep(i, n) for (int i = 0; i < (n); ++i)")
             call setline(42, "#define mem(x, a) memset(x, a, sizeof(x))")
-            call setline(43, "#define fre(x) freopen(x, \"r\", stdin)")
-            call setline(44, "#define ump(S, T) unordered_map<S, T>")
-            call setline(45, "#define wl(x) wr<long long>(x)")
-            call setline(46, "#define rl() rd<long long>()")
-            call setline(47, "#define wi(x) wr<int>(x)")
-            call setline(48, "#define ri() rd<int>()")
-            call setline(49, "")
-            call setline(50, "typedef long long ll;")
-            call setline(51, "typedef unsigned int uint;")
-            call setline(52, "typedef unsigned long long ull;")
-            call setline(53, "typedef pair<int, int> p;")
-            call setline(54, "typedef vector<int> vi;")
-            call setline(55, "typedef vector<vi> vvi;")
-            call setline(56, "typedef vector<ll> vl;")
-            call setline(57, "typedef vector<vl> vvl;")
-            call setline(58, "")
-            call setline(59, "//const int p = 13331;")
-            call setline(60, "const int INF = 0x7fffffff;")
-            call setline(61, "//const ll INF = 1ll << 63;")
-            call setline(62, "template <typename T>")
-            call setline(63, "inline T rd() {")
-            call setline(64, "    T x = 0, f = 1;")
-            call setline(65, "    char c = getchar();")
-            call setline(66, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
-            call setline(67, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
-            call setline(68, "    return x * f;")
-            call setline(69, "}")
-            call setline(70, "template <typename T>")
-            call setline(71, "inline void wr(T x) {")
-            call setline(72, "    T y = 1, len = 1;")
-            call setline(73, "    if (x < 0) x = -x, putchar('-');")
-            call setline(74, "    while (y <= x / 10) y = (y << 1) + (y << 3), ++len;")
-            call setline(75, "    for (; len; --len) putchar(x / y ^ 48), x %= y, y /= 10;")
-            call setline(76, "}")
-            call setline(77, "")
-            call setline(78, "int n, m, k, x, y, z, cnt;")
-            call setline(79, "")
-            call setline(80, "int main() {")
-            call setline(81, "    return 0;")
-            call setline(82, "}")
+            call setline(43, "#define ump(S, T) unordered_map<S, T>")
+            call setline(44, "#define wl(x) wr<long long>(x)")
+            call setline(45, "#define rl() rd<long long>()")
+            call setline(46, "#define wi(x) wr<int>(x)")
+            call setline(47, "#define ri() rd<int>()")
+            call setline(48, "")
+            call setline(49, "typedef long long ll;")
+            call setline(50, "typedef unsigned int uint;")
+            call setline(51, "typedef unsigned long long ull;")
+            call setline(52, "typedef pair<int, int> p;")
+            call setline(53, "typedef vector<int> vi;")
+            call setline(54, "typedef vector<vi> vvi;")
+            call setline(55, "typedef vector<ll> vl;")
+            call setline(56, "typedef vector<vl> vvl;")
+            call setline(57, "")
+            call setline(58, "// const int p = 1000000007;")
+            call setline(59, "// const ll INF = 1ll << 63;")
+            call setline(60, "// const int INF = 0x7fffffff;")
+            call setline(61, "template <typename T>")
+            call setline(62, "inline T rd() {")
+            call setline(63, "    T x = 0, f = 1;")
+            call setline(64, "    char c = getchar();")
+            call setline(65, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
+            call setline(66, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
+            call setline(67, "    return x * f;")
+            call setline(68, "}")
+            call setline(69, "template <typename T>")
+            call setline(70, "inline void wr(T x) {")
+            call setline(71, "    T y = 1, len = 1;")
+            call setline(72, "    if (x < 0) x = -x, putchar('-');")
+            call setline(73, "    while (y <= x / 10) y = (y << 1) + (y << 3), ++len;")
+            call setline(74, "    for (; len; --len) putchar(x / y ^ 48), x %= y, y /= 10;")
+            call setline(75, "}")
+            call setline(76, "")
+            call setline(77, "int main() {")
+            call setline(78, "    return 0;")
+            call setline(79, "}")
+            call setline(80, "")
+            call setline(81, "//")
+            call setline(82, "")
             call setline(83, "")
             call setline(84, "")
             call setline(85, "")
             call setline(86, "")
-            call setline(87, "")
 
         endif
     endif

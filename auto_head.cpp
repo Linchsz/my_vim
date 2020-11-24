@@ -49,9 +49,9 @@ typedef vector<vi> vvi;
 typedef vector<ll> vl;
 typedef vector<vl> vvl;
 
-//const int p = 13331;
-const int INF = 0x7fffffff;
-//const ll INF = 1ll << 63;
+// const int p = 1000000007;
+// const ll INF = 1ll << 63;
+// const int INF = 0x7fffffff;
 template <typename T>
 inline T rd() {
     T x = 0, f = 1;
@@ -74,3 +74,10 @@ int main() {
     return 0;
 }
 
+//
+
+
+
+
+
+//#define eb(x) emplace_back(x)
