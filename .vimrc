@@ -431,13 +431,13 @@ let @y=",2$hvlly,1gg:%s/\"r\"\/\\\\\"r\\\\\"\<CR>\<BS>"
 " 替换指令 %s/\"r\"/\\"r\\"
 let @r='$pj'
 " @r : 给 auto_head.cpp 行尾加上 ")
-let @1="\<ESC>8G\<S-v>78Gdi#include <cstdio>\<CR>\<ESC>"
+let @1="\<ESC>8G\<S-v>75Gdi#include <cstdio>\<CR>\<ESC>"
 " @1 : 更换自动文件头模版 1
-let @2="\<ESC>8G\<S-v>78Gdi#include <cstdio>\<CR>using namespace std;\<CR>\<ESC>^"
+let @2="\<ESC>8G\<S-v>75Gdi#include <cstdio>\<CR>using namespace std;\<CR>\<ESC>"
 " @2 : 更换自动文件头模版 2
 let @3="\<ESC>8G\<S-v>Gd:call SetComment_RD()\<CR>30G"
 " @3 : 更换自动文件头模版 3
-let @f="\<ESC>ofreopen(\"\", \"r\", stdin);\<CR>// freopen(\"\", \"w\", stdout);\<ESC>k14hi"
+let @f="\<ESC>/main\<CR>:noh\<CR>ofreopen(\"\", \"r\", stdin);\<CR>// freopen(\"\", \"w\", stdout);\<ESC>k14hi"
 
 func SetComment_RD()
     call setline(8, "#include <cstdio>")
@@ -624,10 +624,8 @@ func SetTitle()
     endif
 endfunc
 
-"" 创建新文件时光标自动移动到 10 行
-"autocmd BufNewFile * normal 10G
-"" 创建新文件时光标自动移动到 80 行
-autocmd BufNewFile * normal 80G
+"" 创建新文件时光标自动移动到 77 行
+autocmd BufNewFile * normal 77G
 ""实现上面函数中的，Last modified功能
 "autocmd BufWrite,BufWritePre,FileWritePre  *.cpp    ks|call LastModified()|'s  
 "func LastModified()
