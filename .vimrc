@@ -116,7 +116,7 @@ nnoremap dk dk
 " nnoremap dd dd
 "映射 dd 避免因映射 dj 和 dk 造成 d 卡顿 
 " Remap VIM 0 to first non-blank character
-" nnoremap 0 ^
+nnoremap 0 ^
 " nnoremap - $
 
 "解决换行得到的自动缩进, 在退出插入模式而不添加任何内容时缩进消失
@@ -151,7 +151,6 @@ autocmd BufEnter,BufNew *
 augroup END
 Plug 'jiangmiao/auto-pairs'
 " Plug 'kshenoy/vim-signature', { 'on': [] }
-"Plug 'kshenoy/vim-signature'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'dense-analysis/ale', { 'on': [] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on': [] }
@@ -186,6 +185,7 @@ endfunction
 filetype plugin indent on       "taglist 插件需要 on
 " vim-cpp-enhanced-highlight 插件增加支持的 STL 容器类型, 将该类型追加进 cpp.vim 即可
 " vim ~/.vim/plugged/vim-cpp-enhanced-highlight/after/syntax/cpp.vim
+" 插件配置结束
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -372,9 +372,10 @@ func! CompileRun()
     if &filetype == "cpp"
         "!g++ -g % -o %< && %<" -g 选项告诉 GCC 产生能被 GNU 调试器使用的调试信息以便调试你的程序
         "-o 生成 bin 可执行文件, 不加 -o 则生成 a.out 可执行文件
-        "!g++ -Wall % -o %< && %<" 加入 -Wall 将打印出 gcc 提供的警告信息
+        "!g++ -Wall % -o %< && %<" 加入 -Wall 将打印出 gcc 提供的警告信息, -w 禁止所以警告的显示
         " && ./%"
-        exec "!g++ % -o %< && ./%<"
+        " exec "!g++ % -o %< && ./%<"
+        exec "!g++ -w % -o %< && ./%<"
     elseif &filetype == "c"
         exec "!gcc -o % %< && ./%<"
     elseif &filetype == "python"
@@ -540,92 +541,106 @@ func SetTitle()
             call setline(12, "}")
         elseif &filetype == 'cpp'
 
-            call setline(8, "#include <map>")
-            call setline(9, "#include <set>")
-            call setline(10, "#include <cmath>")
-            call setline(11, "#include <queue>")
-            call setline(12, "#include <stack>")
-            call setline(13, "#include <cstdio>")
-            call setline(14, "#include <cctype>")
-            call setline(15, "#include <vector>")
-            call setline(16, "#include <string>")
-            call setline(17, "#include <cstdlib>")
-            call setline(18, "#include <cstring>")
-            call setline(19, "#include <iostream>")
-            call setline(20, "#include <algorithm>")
-            call setline(21, "#include <unordered_map>")
-            call setline(22, "using namespace std;")
-            call setline(23, "")
-            call setline(24, "#define fi first")
-            call setline(25, "#define se second")
-            call setline(26, "#define ed end()")
-            call setline(27, "#define re rend()")
-            call setline(28, "#define bg begin()")
-            call setline(29, "#define rb rbegin()")
-            call setline(30, "#define gc getchar()")
-            call setline(31, "#define pc(x) putchar(x)")
-            call setline(32, "#define pb(x) push_back(x)")
-            call setline(33, "#define all(x) x.begin(), x.end()")
-            call setline(34, "#define sor(x) sort(x.begin(), x.end())")
-            call setline(35, "#define uni(x) unique(x.begin(), x.end())")
-            call setline(36, "#define era(x) x.erase(unique(x.begin(),x.end()),x.end()")
-            call setline(37, "#define posl(x,v) (lower_bound(x.begin(),x.end(),v)-x.begin()")
-            call setline(38, "#define posu(x,v) (upper_bound(x.begin(),x.end(),v)-x.begin()")
-            call setline(39, "#define PQ(T) priority_queue<T, vector<T>, greater<T> >")
-            call setline(40, "#define repn(i, n) for (int i = 1; i <= (n); ++i)")
-            call setline(41, "#define rep(i, n) for (int i = 0; i < (n); ++i)")
-            call setline(42, "#define mem(x, a) memset(x, a, sizeof(x))")
-            call setline(43, "#define ump(S, T) unordered_map<S, T>")
-            call setline(44, "#define wl(x) wr<long long>(x)")
-            call setline(45, "#define rl() rd<long long>()")
-            call setline(46, "#define wi(x) wr<int>(x)")
-            call setline(47, "#define ri() rd<int>()")
-            call setline(48, "")
-            call setline(49, "typedef long long ll;")
-            call setline(50, "typedef unsigned int uint;")
-            call setline(51, "typedef unsigned long long ull;")
-            call setline(52, "typedef pair<int, int> p;")
-            call setline(53, "typedef vector<int> vi;")
-            call setline(54, "typedef vector<vi> vvi;")
-            call setline(55, "typedef vector<ll> vl;")
-            call setline(56, "typedef vector<vl> vvl;")
-            call setline(57, "")
-            call setline(58, "// const int p = 1000000007;")
-            call setline(59, "// const ll INF = 1ll << 63;")
-            call setline(60, "// const int INF = 0x7fffffff;")
-            call setline(61, "template <typename T>")
-            call setline(62, "inline T rd() {")
-            call setline(63, "    T x = 0, f = 1;")
-            call setline(64, "    char c = getchar();")
-            call setline(65, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
-            call setline(66, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
-            call setline(67, "    return x * f;")
-            call setline(68, "}")
-            call setline(69, "template <typename T>")
-            call setline(70, "inline void wr(T x) {")
-            call setline(71, "    T y = 1, len = 1;")
-            call setline(72, "    if (x < 0) x = -x, putchar('-');")
-            call setline(73, "    while (y <= x / 10) y = (y << 1) + (y << 3), ++len;")
-            call setline(74, "    for (; len; --len) putchar(x / y ^ 48), x %= y, y /= 10;")
-            call setline(75, "}")
-            call setline(76, "")
-            call setline(77, "int main() {")
-            call setline(78, "    return 0;")
-            call setline(79, "}")
-            call setline(80, "")
-            call setline(81, "//")
-            call setline(82, "")
-            call setline(83, "")
-            call setline(84, "")
-            call setline(85, "")
-            call setline(86, "")
+            " call setline(8, "#include <cstdio>")
+            call setline(8, "#include <bits/stdc++.h>")
+            call setline(9, "using namespace std;")
+            call setline(10, "")
+            call setline(11, "int main() {")
+            call setline(12, "    return 0;")
+            call setline(13, "}")
+            call setline(14, "")
+            call setline(15, "//")
+            call setline(16, "")
+            call setline(17, "")
+            call setline(18, "")
+
+            " call setline(8, "#include <map>")
+            " call setline(9, "#include <set>")
+            " call setline(10, "#include <cmath>")
+            " call setline(11, "#include <queue>")
+            " call setline(12, "#include <stack>")
+            " call setline(13, "#include <cstdio>")
+            " call setline(14, "#include <cctype>")
+            " call setline(15, "#include <vector>")
+            " call setline(16, "#include <string>")
+            " call setline(17, "#include <cstdlib>")
+            " call setline(18, "#include <cstring>")
+            " call setline(19, "#include <iostream>")
+            " call setline(20, "#include <algorithm>")
+            " call setline(21, "#include <unordered_map>")
+            " call setline(22, "using namespace std;")
+            " call setline(23, "")
+            " call setline(24, "#define fi first")
+            " call setline(25, "#define se second")
+            " call setline(26, "#define ed end()")
+            " call setline(27, "#define re rend()")
+            " call setline(28, "#define bg begin()")
+            " call setline(29, "#define rb rbegin()")
+            " call setline(30, "#define gc getchar()")
+            " call setline(31, "#define pc(x) putchar(x)")
+            " call setline(32, "#define pb(x) push_back(x)")
+            " call setline(33, "#define all(x) x.begin(), x.end()")
+            " call setline(34, "#define sor(x) sort(x.begin(), x.end())")
+            " call setline(35, "#define uni(x) unique(x.begin(), x.end())")
+            " call setline(36, "#define era(x) x.erase(unique(x.begin(),x.end()),x.end()")
+            " call setline(37, "#define posl(x,v) (lower_bound(x.begin(),x.end(),v)-x.begin()")
+            " call setline(38, "#define posu(x,v) (upper_bound(x.begin(),x.end(),v)-x.begin()")
+            " call setline(39, "#define PQ(T) priority_queue<T, vector<T>, greater<T> >")
+            " call setline(40, "#define repn(i, n) for (int i = 1; i <= (n); ++i)")
+            " call setline(41, "#define rep(i, n) for (int i = 0; i < (n); ++i)")
+            " call setline(42, "#define mem(x, a) memset(x, a, sizeof(x))")
+            " call setline(43, "#define ump(S, T) unordered_map<S, T>")
+            " call setline(44, "#define wl(x) wr<long long>(x)")
+            " call setline(45, "#define rl() rd<long long>()")
+            " call setline(46, "#define wi(x) wr<int>(x)")
+            " call setline(47, "#define ri() rd<int>()")
+            " call setline(48, "")
+            " call setline(49, "typedef long long ll;")
+            " call setline(50, "typedef unsigned int uint;")
+            " call setline(51, "typedef unsigned long long ull;")
+            " call setline(52, "typedef pair<int, int> p;")
+            " call setline(53, "typedef vector<int> vi;")
+            " call setline(54, "typedef vector<vi> vvi;")
+            " call setline(55, "typedef vector<ll> vl;")
+            " call setline(56, "typedef vector<vl> vvl;")
+            " call setline(57, "")
+            " call setline(58, "// const int p = 1000000007;")
+            " call setline(59, "// const ll INF = 1ll << 63;")
+            " call setline(60, "// const int INF = 0x7fffffff;")
+            " call setline(61, "template <typename T>")
+            " call setline(62, "inline T rd() {")
+            " call setline(63, "    T x = 0, f = 1;")
+            " call setline(64, "    char c = getchar();")
+            " call setline(65, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
+            " call setline(66, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
+            " call setline(67, "    return x * f;")
+            " call setline(68, "}")
+            " call setline(69, "template <typename T>")
+            " call setline(70, "inline void wr(T x) {")
+            " call setline(71, "    T y = 1, len = 1;")
+            " call setline(72, "    if (x < 0) x = -x, putchar('-');")
+            " call setline(73, "    while (y <= x / 10) y = (y << 1) + (y << 3), ++len;")
+            " call setline(74, "    for (; len; --len) putchar(x / y ^ 48), x %= y, y /= 10;")
+            " call setline(75, "}")
+            " call setline(76, "")
+            " call setline(77, "int main() {")
+            " call setline(78, "    return 0;")
+            " call setline(79, "}")
+            " call setline(80, "")
+            " call setline(81, "//")
+            " call setline(82, "")
+            " call setline(83, "")
+            " call setline(84, "")
+            " call setline(85, "")
+            " call setline(86, "")
 
         endif
     endif
 endfunc
 
 "" 创建新文件时光标自动移动到 77 行
-autocmd BufNewFile * normal 77G
+" autocmd BufNewFile * normal 77G
+autocmd BufNewFile * normal 11G
 ""实现上面函数中的，Last modified功能
 "autocmd BufWrite,BufWritePre,FileWritePre  *.cpp    ks|call LastModified()|'s  
 "func LastModified()
@@ -645,6 +660,5 @@ autocmd BufNewFile * normal 77G
 " AU    auto_file_head
 " CRP   Compile/Run Map
 
-"插件配置结束
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
