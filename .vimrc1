@@ -1,0 +1,36 @@
+sy on
+set et nu is sc ai hls cin udf
+set bs=2 sw=4 scrolloff=999 sts=4 mouse=a cb=unnamed
+
+"colo evening
+nnoremap 0 ^
+map<c-y> mmggVG"+y`m
+map<f5> :call Run()<cr>
+
+func! Run()
+    exec "w"
+    exec "!g++ -std=c++11 -O2 % -o %<"
+    exec "!time ./%<"
+endfunc
+
+inoremap ( ()<esc>i
+inoremap { {}<esc>i
+inoremap [ []<esc>i
+inoremap {<cr> {<cr>}<esc>O
+inoremap ) <c-r>=ClosePair(')')<cr>
+inoremap } <c-r>=ClosePair('}')<cr>
+inoremap ] <c-r>=ClosePair(']')<cr>
+
+func ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<right>"
+    else
+        return a:char
+    endif
+endfunc
+
+vnoremap \\ mm^o^<C-v>I//<ESC>`m
+vnoremap \d mm^o^<C-v>ld<ESC>`m
+
+
+

@@ -60,13 +60,13 @@ nnoremap <silent><leader>aq :xa<CR>
 inoremap <silent><leader>aq <ESC>:xa<CR>
 vnoremap <silent><leader>aq <ESC>:xa<CR>
 "选中全文"
-nnoremap <silent><leader>v ggv<S-g>$
-inoremap <silent><leader>v <ESC>ggv<S-g>$
-vnoremap <silent><leader>v <ESC>ggv<S-g>$
+nnoremap <silent><leader>v gg<S-v><S-g>
+inoremap <silent><leader>v <ESC>gg<S-v><S-g>
+vnoremap <silent><leader>v <ESC>gg<S-v><S-g>
 "复制全文到系统剪切板
-nnoremap <silent><leader>y muggv<S-g>$y`u
-inoremap <silent><leader>y <ESC>mujggv<S-g>$y`u
-vnoremap <silent><leader>y <ESC>mujggv<S-g>$y`u
+nnoremap <silent><leader>y mugg<S-v><S-g>y`u
+inoremap <silent><leader>y <ESC>mujgg<S-v><S-g>y`u
+vnoremap <silent><leader>y <ESC>mujgg<S-v><S-g>y`u
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
 
@@ -248,6 +248,9 @@ set scrolloff=999
 
 "自动切换工作目录。这主要用在一个 Vim 会话之中打开多个文件的情况,默认的工作目录是打开的第一个文件的目录。该配置可以将工作目录自动切换到,正在编辑的文件的目录
 "set autochdir
+
+"将撤销文件集中保存到指定的目录
+set undodir=$HOME/.vim/undodir
 
 "出错时,不要发出响声
 set noerrorbells
