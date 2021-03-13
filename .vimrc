@@ -3,7 +3,7 @@ set runtimepath+=~/.vim/.vim_runtime
 "设置前缀键为 ,
 let mapleader = ","
 " <leader> 的 timeoutlen
-set tm=700
+set tm=500
 
 source ~/.vim/.vim_runtime/vimrcs/basic.vim
 "source ~/.vim/.vim_runtime/vimrcs/extended.vim
