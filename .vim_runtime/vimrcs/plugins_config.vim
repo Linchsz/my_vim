@@ -217,29 +217,29 @@ autocmd BufWritePost *.cpp :TlistUpdate
 " => NERDTree
 """"""""""""""""""""""""""""""
 " <leader>nt 打开 nerdtree 窗口
-" nnoremap <silent><leader>nt :NERDTreeToggle<CR>
-" " inoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
-" vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
-" let NERDTreeHighlightCursorline = 1       " 高亮当前行
-" let NERDTreeShowLineNumbers     = 1       " 显示行号
-" " 忽略列表中的文件
-" let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.egg$', '^\.git$', '^\.repo$', '^\.svn$', '^\.hg$' ]
-" let g:NERDTreeWinPos = "right"            " 在右侧栏显示
-" let NERDTreeShowHidden=0
-" let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-" let g:NERDTreeWinSize=35
-" "map <leader>nb :NERDTreeFromBookmark<Space>
-" " 找到当前 buffer 对应的目录
-" nnoremap <leader>nf :NERDTreeFind<cr>
-" vnoremap <leader>nf :NERDTreeFind<cr>
-" " 启动 vim 时打开 NERDTree
-" "autocmd vimenter * NERDTree
-" " 当打开 VIM，没有指定文件时和打开一个目录时，打开 NERDTree
-" " autocmd StdinReadPre * let s:std_in = 1
-" " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" " autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-" " 关闭 NERDTree，当没有文件打开的时候
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+nnoremap <silent><leader>nt :NERDTreeToggle<CR>
+" inoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
+vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
+let NERDTreeHighlightCursorline = 1       " 高亮当前行
+let NERDTreeShowLineNumbers     = 1       " 显示行号
+" 忽略列表中的文件
+let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.egg$', '^\.git$', '^\.repo$', '^\.svn$', '^\.hg$' ]
+let g:NERDTreeWinPos = "right"            " 在右侧栏显示
+let NERDTreeShowHidden=0
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let g:NERDTreeWinSize=35
+"map <leader>nb :NERDTreeFromBookmark<Space>
+" 找到当前 buffer 对应的目录
+nnoremap <leader>nf :NERDTreeFind<cr>
+vnoremap <leader>nf :NERDTreeFind<cr>
+" 启动 vim 时打开 NERDTree
+"autocmd vimenter * NERDTree
+" 当打开 VIM，没有指定文件时和打开一个目录时，打开 NERDTree
+" autocmd StdinReadPre * let s:std_in = 1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+" 关闭 NERDTree，当没有文件打开的时候
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 " 按键映射
 " <leader>tc 关闭当前的 tab
 "map <leader>tc :tabc<CR>
