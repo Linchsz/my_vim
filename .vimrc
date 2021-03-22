@@ -44,35 +44,35 @@ endtry
 "map <leader>n :set nu<CR>
 " 快速保存  <leader> + w
 nnoremap <silent><leader>w :w<CR><ESC>
-inoremap <silent><leader>w <ESC>:w<CR><ESC>
+" inoremap <silent><leader>w <ESC>:w<CR><ESC>
 vnoremap <silent><leader>w <ESC>:w<CR><ESC>
 " 保存所有窗口
 nnoremap <silent><leader>aw :wa<CR><ESC>
-inoremap <silent><leader>aw <ESC>:wa<CR><ESC>
+" inoremap <silent><leader>aw <ESC>:wa<CR><ESC>
 vnoremap <silent><leader>aw <ESC>:wa<CR><ESC>
 " 保存并退出按键映射为 <leader> + q
 " :x 和 ZZ 命令与 :wq 类似, 但不会写入没有改变的文件, 并且更快
 nnoremap <silent><leader>q :x<CR>
-inoremap <silent><leader>q <ESC>:x<CR>
+" inoremap <silent><leader>q <ESC>:x<CR>
 vnoremap <silent><leader>q <ESC>:x<CR>
 " 保存并退出所有窗口
 nnoremap <silent><leader>aq :xa<CR>
-inoremap <silent><leader>aq <ESC>:xa<CR>
+" inoremap <silent><leader>aq <ESC>:xa<CR>
 vnoremap <silent><leader>aq <ESC>:xa<CR>
 "选中全文"
 nnoremap <silent><leader>v gg<S-v><S-g>
-inoremap <silent><leader>v <ESC>gg<S-v><S-g>
+" inoremap <silent><leader>v <ESC>gg<S-v><S-g>
 vnoremap <silent><leader>v <ESC>gg<S-v><S-g>
 "复制全文到系统剪切板
 nnoremap <silent><leader>y mugg<S-v><S-g>y`u
-inoremap <silent><leader>y <ESC>mujgg<S-v><S-g>y`u
+" inoremap <silent><leader>y <ESC>mujgg<S-v><S-g>y`u
 vnoremap <silent><leader>y <ESC>mujgg<S-v><S-g>y`u
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
 
 " 使用 Ctrl + t 打开一个新 Buffer, 然后输入文件名创建新文件
 nnoremap <C-e> :enew<CR>:e 
-inoremap <C-e> <ESC>:enew<CR>:e 
+inoremap <C-e> <ESC>:enew<CR>:e
 vnoremap <C-e> <ESC>:enew<CR>:e 
 " 使用 Ctrl + n 切换到下一个 Buffer
 nnoremap <silent> <C-n> :bn<CR>
@@ -84,15 +84,15 @@ inoremap <silent> <C-p> <ESC>:bp<CR>
 vnoremap <silent> <C-p> <ESC>:bp<CR>
 " 使用 dd 保存并关闭当前 Buffer
 nnoremap <silent> <leader>dd :w<CR>:Bclose<cr>:tabclose<cr>gT
-inoremap <silent> <leader>dd <ESC>:w<CR>:Bclose<cr>:tabclose<cr>gT
+" inoremap <silent> <leader>dd <ESC>:w<CR>:Bclose<cr>:tabclose<cr>gT
 vnoremap <silent> <leader>dd <ESC>:w<CR>:Bclose<cr>:tabclose<cr>gT
 " 使用 dq 强制关闭当前 Buffer
 nnoremap <silent> <leader>dq :Bclose<cr>:tabclose<cr>gT
-inoremap <silent> <leader>dq <ESC>:Bclose<cr>:tabclose<cr>gT
+" inoremap <silent> <leader>dq <ESC>:Bclose<cr>:tabclose<cr>gT
 vnoremap <silent> <leader>dq <ESC>:Bclose<cr>:tabclose<cr>gT
 " 使用 da 关闭所有 Buffer
 nnoremap <silent> <leader>da :bufdo bd<CR>
-inoremap <silent> <leader>da <ESC>:bufdo bd<CR>
+" inoremap <silent> <leader>da <ESC>:bufdo bd<CR>
 vnoremap <silent> <leader>da <ESC>:bufdo bd<CR>
 " 使用 bs 列出 Buffer 列表
 "nnoremap <silent> bs :ls<CR>
@@ -116,7 +116,7 @@ nnoremap dk dk
 " nnoremap dd dd
 "映射 dd 避免因映射 dj 和 dk 造成 d 卡顿 
 " Remap VIM 0 to first non-blank character
-nnoremap 0 ^
+" nnoremap 0 ^
 " nnoremap - $
 
 "解决换行得到的自动缩进, 在退出插入模式而不添加任何内容时缩进消失
@@ -144,10 +144,10 @@ augroup loadNerdtree
 autocmd!
 autocmd VimEnter * silent! autocmd! FileExplorer
 autocmd BufEnter,BufNew *
-          \  if isdirectory(expand('<amatch>'))
-          \|   call plug#load('nerdtree')
-          \|   call nerdtree#checkForBrowse(expand("<amatch>"))
-          \| endif
+      \  if isdirectory(expand('<amatch>'))
+      \|   call plug#load('nerdtree')
+      \|   call nerdtree#checkForBrowse(expand("<amatch>"))
+      \| endif
 augroup END
 Plug 'jiangmiao/auto-pairs'
 " Plug 'kshenoy/vim-signature', { 'on': [] }
@@ -172,15 +172,15 @@ call plug#end()
 call timer_start(100, 'LoadPlug')
 function! LoadPlug(timer) abort
 "  call plug#load('vim-fugitive')
-  call plug#load('ctrlp.vim')
-  call plug#load('ctrlp-funky')
-  " call plug#load('vim-signature')
-  call plug#load('ale')
-  call plug#load('nerdcommenter')
-  call plug#load('YouCompleteMe')
-  call plug#load('vim-bufferline')
-  call plug#load('vim-airline-themes')
-  call plug#load('vim-airline')
+call plug#load('ctrlp.vim')
+call plug#load('ctrlp-funky')
+" call plug#load('vim-signature')
+call plug#load('ale')
+call plug#load('nerdcommenter')
+call plug#load('YouCompleteMe')
+call plug#load('vim-bufferline')
+call plug#load('vim-airline-themes')
+call plug#load('vim-airline')
 endfunction
 filetype plugin indent on       "taglist 插件需要 on
 " vim-cpp-enhanced-highlight 插件增加支持的 STL 容器类型, 将该类型追加进 cpp.vim 即可
@@ -273,21 +273,22 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <leader> + ee 编译
 nnoremap <leader>ee :call CompileCode()<CR>
-inoremap <leader>ee <ESC>:call CompileCode()<CR>
+" inoremap <leader>ee <ESC>:call CompileCode()<CR>
 vnoremap <leader>ee <ESC>:call CompileCode()<CR>
 " <leader> + er 运行 
-noremap <leader>er :call RunResult()<CR>
+nnoremap <leader>er :call RunResult()<CR>
+vnoremap <leader>er :call RunResult()<CR>
 " <leader> + r 编译并运行
 nnoremap <leader>r :w<CR><ESC>:call CompileRun()<CR>
-inoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
+" inoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
 vnoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
 " <leader> + 1r  C++17 编译并运行
 nnoremap <leader>1r :w<CR><ESC>:call CompileRunCPP17()<CR>
-inoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
+" inoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
 vnoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
 " <leader> + tr  编译运行并显示运行时间
 nnoremap <leader>tr :call CompileRunShowTime()<CR>
-inoremap <leader>tr <ESC>:call CompileRunShowTime()<CR>
+" inoremap <leader>tr <ESC>:call CompileRunShowTime()<CR>
 vnoremap <leader>tr <ESC>:call CompileRunShowTime()<CR>
 "F8 gdb调试
 "noremap <F8> :call Debug()<CR>

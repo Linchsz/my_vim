@@ -8,11 +8,13 @@
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
-let s:vim_runtime = expand('<sfile>:p:h')."/.."
-call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
-call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
-"call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
-call pathogen#helptags()
+" 以下几行大概是没什么用的, 会导致在 <insert> 模式下输入 <leader>p 时自动输入 <PLug>PeepOpen
+" 从而造成 <insert> 模式下 <leader> 按键卡顿
+" let s:vim_runtime = expand('<sfile>:p:h')."/.."
+" call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
+" call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
+" "call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
+" call pathogen#helptags()
 
 
 " 在退出主编辑窗口后, 自动关闭其他分割窗口的插件(如 NERDTree), 并退出 vim
@@ -61,7 +63,7 @@ nmap <Leader>s :ALEToggle<CR>
 let g:NERDSpaceDelims=1
 " 取消注释时启用尾随空白的修剪
 let g:NERDTrimTrailingWhitespace = 1
-imap <leader><leader> <ESC><leader>c<space>
+" imap <leader><leader> <ESC><leader>c<space>
 nmap <leader><leader> <leader>c<space>
 vmap <leader><leader> <leader>c<space>
 " [count] <Leader> cc NERDCommenterComment
@@ -191,8 +193,8 @@ let Tlist_Use_Left_Window         = 1    " 在左侧窗口中显示(默认)
 "let Tlist_File_Fold_Auto_Close    = 1    " 当前缓冲区文件的 tags 自动打开, 其它缓冲区文件的自动折叠
 let Tlist_Auto_Update             = 1    " 自动更新
 "<leader>tl 打开 Tlist 窗口, 并显示行号
-noremap <silent><leader>tl :TlistToggle<CR>:set nu<CR>
-inoremap <silent><leader>tl <ESC>:TlistToggle<CR>:set nu<CR>
+nnoremap <silent><leader>tl :TlistToggle<CR>:set nu<CR>
+" inoremap <silent><leader>tl <ESC>:TlistToggle<CR>:set nu<CR>
 vnoremap <silent><leader>tl <ESC>:TlistToggle<CR>:set nu<CR>
 "在 vim 保存文件时自动更新 taglist
 autocmd BufWritePost *.cpp :TlistUpdate
@@ -215,28 +217,29 @@ autocmd BufWritePost *.cpp :TlistUpdate
 " => NERDTree
 """"""""""""""""""""""""""""""
 " <leader>nt 打开 nerdtree 窗口
-noremap <silent><leader>nt :NERDTreeToggle<CR>
-inoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
-vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
-let NERDTreeHighlightCursorline = 1       " 高亮当前行
-let NERDTreeShowLineNumbers     = 1       " 显示行号
-" 忽略列表中的文件
-let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.egg$', '^\.git$', '^\.repo$', '^\.svn$', '^\.hg$' ]
-let g:NERDTreeWinPos = "right"            " 在右侧栏显示
-let NERDTreeShowHidden=0
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-let g:NERDTreeWinSize=35
-"map <leader>nb :NERDTreeFromBookmark<Space>
-" 找到当前 buffer 对应的目录
-map <leader>nf :NERDTreeFind<cr>
-" 启动 vim 时打开 NERDTree
-"autocmd vimenter * NERDTree
-" 当打开 VIM，没有指定文件时和打开一个目录时，打开 NERDTree
-" autocmd StdinReadPre * let s:std_in = 1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-" 关闭 NERDTree，当没有文件打开的时候
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+" nnoremap <silent><leader>nt :NERDTreeToggle<CR>
+" " inoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
+" vnoremap <silent><leader>nt <ESC>:NERDTreeToggle<CR>
+" let NERDTreeHighlightCursorline = 1       " 高亮当前行
+" let NERDTreeShowLineNumbers     = 1       " 显示行号
+" " 忽略列表中的文件
+" let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.egg$', '^\.git$', '^\.repo$', '^\.svn$', '^\.hg$' ]
+" let g:NERDTreeWinPos = "right"            " 在右侧栏显示
+" let NERDTreeShowHidden=0
+" let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+" let g:NERDTreeWinSize=35
+" "map <leader>nb :NERDTreeFromBookmark<Space>
+" " 找到当前 buffer 对应的目录
+" nnoremap <leader>nf :NERDTreeFind<cr>
+" vnoremap <leader>nf :NERDTreeFind<cr>
+" " 启动 vim 时打开 NERDTree
+" "autocmd vimenter * NERDTree
+" " 当打开 VIM，没有指定文件时和打开一个目录时，打开 NERDTree
+" " autocmd StdinReadPre * let s:std_in = 1
+" " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" " autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+" " 关闭 NERDTree，当没有文件打开的时候
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 " 按键映射
 " <leader>tc 关闭当前的 tab
 "map <leader>tc :tabc<CR>
@@ -393,13 +396,13 @@ let g:ctrlp_follow_symlinks=1
 " 默认使用 <文件名匹配> 模式进行模糊搜索
 let g:ctrlp_by_filename = 1
 nnoremap <leader>fb :CtrlPBuffer<CR>
-inoremap <leader>fb <ESC>:CtrlPBuffer<CR>
+" inoremap <leader>fb <ESC>:CtrlPBuffer<CR>
 vnoremap <leader>fb <ESC>:CtrlPBuffer<CR>
 nnoremap <leader>fu :CtrlPMRU<CR>
-inoremap <leader>fu <ESC>:CtrlPMRU<CR>
+" inoremap <leader>fu <ESC>:CtrlPMRU<CR>
 vnoremap <leader>fu <ESC>:CtrlPMRU<CR>
 nnoremap <leader>fa :CtrlPMixed<CR>
-inoremap <leader>fa <ESC>:CtrlPMixed<CR>
+" inoremap <leader>fa <ESC>:CtrlPMixed<CR>
 vnoremap <leader>fa <ESC>:CtrlPMixed<CR>
 " Commands
 " <leader> + fc     进入查找文件模式, 模糊搜索当前目录及其子目录下的所有文件
