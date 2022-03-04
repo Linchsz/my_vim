@@ -173,14 +173,15 @@ set ffs=unix,dos,mac
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 "不创建备份文件。默认情况下,文件保存时,会额外创建一个备份文件,它的文件名是在原文件名的末尾,再添加一个波浪号(〜)
-set nobackup
+" set nobackup
 
 "set nowb
 
 "不创建交换文件。交换文件主要用于系统崩溃时恢复文件,文件名的开头是.、结尾是.swp
 "set noswapfile
 
-"创建交换文件
+set backup
+set undofile
 set swapfile
 
 "交换文件每隔多少毫秒保存一次
@@ -191,14 +192,14 @@ set updatecount=200
 
 "设置备份文件、交换文件、操作历史文件的保存位置
 "结尾的//表示生成的文件名带有绝对路径,路径中用%替换目录分隔符,这样可以防止文件重名
-"set backupdir=~/.vim/.backup//  
-"set directory=~/.vim/.swp//
-"set undodir=~/.vim/.undo// 
+set backupdir=~/.vim/.backup//
+set directory=~/.vim/.swp//
+set undodir=~/.vim/.undo//
 
 "保留撤销历史
 "Vim 会在编辑时保存操作历史,用来供用户撤消更改。默认情况下,操作记录只在本次编辑时有效,一旦编辑结束、文件关闭,操作历史就消失了
 "打开这个设置,可以在文件关闭后,操作记录保留在一个文件里面,继续存在。这意味着,重新打开一个文件,可以撤销上一次编辑时的操作。撤消文件是跟原文件保存在一起的隐藏文件,文件名以.un~开头
-set undofile
+" set undofile
 
 "自动切换工作目录。这主要用在一个 Vim 会话之中打开多个文件的情况,默认的工作目录是打开的第一个文件的目录。该配置可以将工作目录自动切换到,正在编辑的文件的目录
 "set autochdir

@@ -1,0 +1,39 @@
+sy on
+set et nu is sc ai hls cin udf
+set bs=2 sw=4 so=999 hi=10000 sts=4 mouse=a cb=unnamed
+set noeb vb t_vb=
+"colo ron
+colo gruvbox
+"colo evening
+
+" let mapleader = ","
+map<f5> :call Run()<cr>
+nnoremap <leader>y mmggVG"+y`m
+" vnoremap <leader>d  mm^o^<C-v>lld<ESC>`m
+" vnoremap <leader><leader> mm^o^<C-v>I// <ESC>`m
+
+"map<c-y> mmggVG"+y`m
+"vnoremap \\ mm^o^<C-v>I//<ESC>`m
+"vnoremap \d mm^o^<C-v>ld<ESC>`m
+
+func! Run()
+    exec "w"
+    exec "!g++ -w % -o %< && ./%<"
+endfunc
+
+" inoremap ( ()<esc>i
+" inoremap { {}<esc>i
+" inoremap [ []<esc>i
+inoremap {<cr> {<cr>}<esc>O
+" inoremap ) <c-r>=ClosePair(')')<cr>
+" inoremap } <c-r>=ClosePair('}')<cr>
+" inoremap ] <c-r>=ClosePair(']')<cr>
+
+" func ClosePair(char)
+    " if getline('.')[col('.') - 1] == a:char
+        " return "\<right>"
+    " else
+        " return a:char
+    " endif
+" endfunc
+

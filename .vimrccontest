@@ -1,0 +1,53 @@
+sy on
+set et nu is sc ai hls cin udf
+set bs=2 sw=4 so=999 hi=10000 sts=4 mouse=a cb=unnamed
+set noeb vb t_vb=
+colo gruvbox
+"colo evening
+
+let mapleader = ","
+nnoremap <C-e> :enew<CR>:e 
+nnoremap <silent> <C-n> :bn<CR>
+nnoremap <leader>w :w<cr><esc>
+nnoremap <leader>v ggVG
+nnoremap <leader>y mmggVG"+y`m
+nnoremap <leader>r :call Run()<cr>
+nnoremap <leader>tr :call Run_T()<cr>
+nnoremap <silent><leader>l :!clear<CR><CR>
+"vnoremap <leader><leader> mm^o^<C-v>I// <ESC>`m
+"vnoremap <leader>d  mm^o^<C-v>lld<ESC>`m
+
+"map<c-y> mmggVG"+y`m
+"vnoremap \\ mm^o^<C-v>I//<ESC>`m
+"vnoremap \d mm^o^<C-v>ld<ESC>`m
+
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-h> <C-W>h
+noremap <C-l> <C-W>l
+
+func! Run()
+    exec "w"
+    exec "!g++ -w % -o %< && ./%<"
+endfunc
+
+func! Run_T()
+    exec "w"
+    exec "!g++ % -o %< && time ./%<"
+endfunc
+
+inoremap {<cr> {<cr>}<esc>O
+"inoremap ( ()<esc>i
+"inoremap { {}<esc>i
+"inoremap [ []<esc>i
+"inoremap ) <c-r>=ClosePair(')')<cr>
+"inoremap } <c-r>=ClosePair('}')<cr>
+"inoremap ] <c-r>=ClosePair(']')<cr>
+"
+"func ClosePair(char)
+"    if getline('.')[col('.') - 1] == a:char
+"        return "\<right>"
+"    else
+"        return a:char
+"    endif
+"endfunc

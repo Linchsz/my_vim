@@ -64,9 +64,13 @@ nnoremap <silent><leader>v gg<S-v><S-g>
 " inoremap <silent><leader>v <ESC>gg<S-v><S-g>
 vnoremap <silent><leader>v <ESC>gg<S-v><S-g>
 "复制全文到系统剪切板
-nnoremap <silent><leader>y mugg<S-v><S-g>y`u
-" inoremap <silent><leader>y <ESC>mujgg<S-v><S-g>y`u
-vnoremap <silent><leader>y <ESC>mujgg<S-v><S-g>y`u
+nnoremap <silent><leader>Y mugg<S-v><S-g>y`u
+" inoremap <silent><leader>Y <ESC>mujgg<S-v><S-g>y`u
+vnoremap <silent><leader>Y <ESC>mujgg<S-v><S-g>y`u
+"复制主体部分(去首尾注释)到系统剪切板
+nnoremap <silent><leader>y mugg}j<S-v><S-g>{ky`u
+" inoremap <silent><leader>y <ESC>mugg}j<S-v><S-g>{ky`u
+vnoremap <silent><leader>y <ESC>mugg}j<S-v><S-g>{ky`u
 "命令窗口清屏
 nnoremap <silent><leader>l :!clear<CR><CR>
 
@@ -104,6 +108,8 @@ vnoremap <silent> <leader>da <ESC>:bufdo bd<CR>
 "map <leader>tc :tabclose<cr>
 "map <leader>tm :tabmove 
 "map <leader>t<leader> :tabnext 
+" 打开当前文件的目录
+nnoremap <silent> <leader>oo :!open .<CR>
 
 "解决 O 卡顿
 set noesckeys
@@ -131,6 +137,16 @@ nnoremap dk dk
 " :Rename newFile.txt 将正在编辑的文件重命名为 newFile.txt
 :command! -nargs=1 Rename let tpname = expand('%:t') | saveas <args> | edit <args> | call delete(expand(tpname))
 
+" astyle 格式化代码 (gnu, linux, google 风格)
+nnoremap gsh :call FormatCode()<CR>
+func! FormatCode()
+    exec "w"
+    if &filetype == 'C' || &filetype == 'h'
+        exec "!astyle --style=google %"
+    elseif &filetype == 'cpp'
+        exec "!astyle --style=google %"
+    endif
+endfunc
 
 " vim-plug 环境设置
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -149,6 +165,7 @@ autocmd BufEnter,BufNew *
       \|   call nerdtree#checkForBrowse(expand("<amatch>"))
       \| endif
 augroup END
+
 Plug 'jiangmiao/auto-pairs'
 " Plug 'kshenoy/vim-signature', { 'on': [] }
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -249,9 +266,6 @@ set scrolloff=999
 "自动切换工作目录。这主要用在一个 Vim 会话之中打开多个文件的情况,默认的工作目录是打开的第一个文件的目录。该配置可以将工作目录自动切换到,正在编辑的文件的目录
 "set autochdir
 
-"将撤销文件集中保存到指定的目录
-set undodir=$HOME/.vim/undodir
-
 "出错时,不要发出响声
 set noerrorbells
 
@@ -268,7 +282,6 @@ endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 " 编译/运行 按键映射 (支持 C, C++, Java, Python, Shell)  CRP
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <leader> + ee 编译
@@ -278,25 +291,29 @@ vnoremap <leader>ee <ESC>:call CompileCode()<CR>
 " <leader> + er 运行 
 nnoremap <leader>er :call RunResult()<CR>
 vnoremap <leader>er :call RunResult()<CR>
-" <leader> + r 编译并运行
+" <leader> + r C++17 编译并运行
 nnoremap <leader>r :w<CR><ESC>:call CompileRun()<CR>
 " inoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
 vnoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
+" <leader> + g lldb 调试
+nnoremap <leader>g :w<CR><ESC>:call Debug()<CR>
+" inoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
+vnoremap <leader>g <ESC>:w<CR><ESC>:call Debug()<CR>
 " <leader> + 1r  C++17 编译并运行
-nnoremap <leader>1r :w<CR><ESC>:call CompileRunCPP17()<CR>
+" nnoremap <leader>1r :w<CR><ESC>:call CompileRunCPP17()<CR>
 " inoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
-vnoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
+" vnoremap <leader>1r <ESC>:w<CR><ESC>:call CompileRunCPP17()<CR>
 " <leader> + tr  编译运行并显示运行时间
 nnoremap <leader>tr :call CompileRunShowTime()<CR>
 " inoremap <leader>tr <ESC>:call CompileRunShowTime()<CR>
 vnoremap <leader>tr <ESC>:call CompileRunShowTime()<CR>
-"F8 gdb调试
-"noremap <F8> :call Debug()<CR>
-"func!  Debug()
-"    exec "w"
-"    exec "!gcc % -o %< -gstabs+"
-"    exec "!gdb %<"
-"endfunc
+"F8 lldb 调试
+" noremap <F8> :call Debug()<CR>
+func!  Debug()
+   " exec "w"
+   exec "!g++ -std=c++17 % -o %<"
+   exec "!lldb %<"
+endfunc
 
 "exec 把一个字符串当做 vim 的命令来执行
 func! CompileGcc()
@@ -340,10 +357,12 @@ func! CompileGpp()
     exec compilecmd." % ".compileflag
 endfunc
 
-func! CompileCode()
+func! CompileCode() " 只编译
     exec "w"
     if &filetype == "cpp"
-        exec "call CompileGpp()"
+        " 编译 C++17
+        exec "!g++ -std=c++17 % -o %<"
+        " exec "call CompileGpp()"
     elseif &filetype == "c"
         exec "call CompileGcc()"
     elseif &filetype == "python"
@@ -355,7 +374,7 @@ func! CompileCode()
     endif
 endfunc
 
-func! RunResult()
+func! RunResult() " 只运行
     if search("mpi\.h") != 0
         exec "!mpirun -np 4 ./%<"
     elseif &filetype == "cpp"
@@ -371,7 +390,7 @@ elseif &filetype == "java"
 endif
 endfunc
 
-func! CompileRun()
+func! CompileRun() " 编译并运行
     exec "w"
     if &filetype == "cpp"
         "!g++ -g % -o %< && %<" -g 选项告诉 GCC 产生能被 GNU 调试器使用的调试信息以便调试你的程序
@@ -379,11 +398,13 @@ func! CompileRun()
         "!g++ -Wall % -o %< && %<" 加入 -Wall 将打印出 gcc 提供的警告信息, -w 禁止所以警告的显示
         " && ./%"
         " exec "!g++ % -o %< && ./%<"
-        exec "!g++ -w % -o %< && ./%<"
+        " exec "!g++ -w % -o %< && ./%<"
+        " 编译并运行 C++17
+        exec "!g++ -std=c++17 % -o %< && ./%<"
     elseif &filetype == "c"
         exec "!gcc -o % %< && ./%<"
     elseif &filetype == "python"
-        exec "!python %"
+        exec "!python3 %"
     elseif &filetype == 'shell'
         exec "!chmod a+x % && ./%<"
     elseif &filetype == "java"
@@ -391,21 +412,15 @@ func! CompileRun()
     endif
 endfunc
 
-"C++17 编译并运行
-func! CompileRunCPP17()
-    exec "w"
-    if &filetype == "cpp"
-        exec "!g++ -std=c++17 % -o %< && ./%<"
-    endif
-endfunc
-
 func! CompileRunShowTime()
     exec "w"
     if &filetype == "cpp"
-        "!g++ -g % -o %< && %<" -g 选项告诉 GCC 产生能被 GNU 调试器使用的调试信息以便调试你的程序
+        " !g++ -g % -o %< && %<" -g 选项告诉 GCC 产生能被 GNU 调试器使用的调试信息以便调试你的程序
         "-o 生成 bin 可执行文件, 不加 -o 则生成 a.out 可执行文件
         "!g++ -Wall % -o %< && %<" 加入 -Wall 将打印出 gcc 提供的警告信息
-        exec "!g++ % -o %< && time ./%<"
+        " exec "!g++ % -o %< && time ./%<"
+        " C++17
+        exec "!g++ -std=c++17 % -o %< && time ./%<"
     elseif &filetype == "c"
         exec "!gcc % -o %< && time ./%<"
     elseif &filetype == "python"
@@ -438,45 +453,34 @@ let @r='$pj'
 " @r : 给 auto_head.cpp 行尾加上 ")
 let @1="\<ESC>8G\<S-v>75Gdi#include <cstdio>\<CR>\<ESC>"
 " @1 : 更换自动文件头模版 1
-let @2="\<ESC>8G\<S-v>75Gdi#include <cstdio>\<CR>using namespace std;\<CR>\<ESC>"
-" @2 : 更换自动文件头模版 2
-let @3="\<ESC>8G\<S-v>Gd:call SetComment_RD()\<CR>30G"
-" @3 : 更换自动文件头模版 3
-let @f="\<ESC>/main\<CR>:noh\<CR>ofreopen(\"\", \"r\", stdin);\<CR>// freopen(\"\", \"w\", stdout);\<ESC>k14hi"
+" let @2="\<ESC>8G\<S-v>75Gdi#include <cstdio>\<CR>using namespace std;\<CR>\<ESC>"
+" @2 : 生成对拍程序
+let @g="\<ESC>gg\<S-v>Gd:call SetComment_RD()\<CR>7G19|i"
 
 func SetComment_RD()
-    call setline(8, "#include <cstdio>")
-    call setline(9, "#include <cctype>")
-    call setline(10, "using namespace std;")
-    call setline(11, "")
-    call setline(12, "#define ri() rd<int>()")
-    call setline(13, "#define rl() rd<long long>()")
-    call setline(14, "")
-    call setline(15, "template <typename T>")
-    call setline(16, "inline T rd() {")
-    call setline(17, "    T x = 0, f = 1;")
-    call setline(18, "    char c = getchar();")
-    call setline(19, "    while (!isdigit(c)) {")
-    call setline(20, "        f = c == '-' ? -1 : 1;")
-    call setline(21, "        c = getchar();")
-    call setline(22, "    }")
-    call setline(23, "    while (isdigit(c)) {")
-    call setline(24, "        x = (x << 1) + (x << 3) + (c ^ 48);")
-    call setline(25, "        c = getchar();")
-    call setline(26, "    }")
-    call setline(27, "    return x * f;")
-    call setline(28, "}")
-    call setline(29, "")
-    call setline(30, "int main() {")
-    call setline(31, "    return 0;")
-    call setline(32, "}")
-    call setline(33, "")
-    call setline(34, "//")
-    call setline(35, "")
-    call setline(36, "")
-    call setline(37, "")
-    call setline(38, "")
-    call setline(39, "")
+
+    call setline(1 , "#include <cstdio>")
+    call setline(2 , "#include <cstdlib>")
+    call setline(3 , "int main() {")
+    call setline(4 , "    int tmp = 0;")
+    call setline(5 , "    for (int i = 1; i <= 10000; ++i) {")
+    call setline(6 , "        system(\"./generate\"); // 数据生成器")
+    call setline(7 , "        system(\"./\"); // 对拍程序")
+    call setline(8 , "        system(\"./a\"); // 我的程序")
+    call setline(9 , "")
+    call setline(10, "        if (i / 100 > tmp) {")
+    call setline(11, "            printf(\"-- %d --\\n\", i);")
+    call setline(12, "            tmp = i / 100;")
+    call setline(13, "        }")
+    call setline(14, "        if (system(\"diff test.out std.out\")) { // 对比输出结果")
+    call setline(15, "            printf(\"wrong in --> %d \\n\", i);")
+    call setline(16, "            break;")
+    call setline(17, "        }")
+    call setline(18, "    }")
+    call setline(19, "    return 0;")
+    call setline(20, "}")
+    call setline(21, "")
+
 endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -545,98 +549,66 @@ func SetTitle()
             call setline(12, "}")
         elseif &filetype == 'cpp'
 
-            " call setline(8, "#include <cstdio>")
-            call setline(8, "#include <bits/stdc++.h>")
-            call setline(9, "using namespace std;")
+            call setline(8,  "")
+            call setline(9,  "")
             call setline(10, "")
-            call setline(11, "int main() {")
-            call setline(12, "    return 0;")
-            call setline(13, "}")
-            call setline(14, "")
-            call setline(15, "//")
-            call setline(16, "")
-            call setline(17, "")
-            call setline(18, "")
+            call setline(11, "//")
+            call setline(12, "")
+            call setline(13, "")
 
-            " call setline(8, "#include <map>")
-            " call setline(9, "#include <set>")
-            " call setline(10, "#include <cmath>")
-            " call setline(11, "#include <queue>")
-            " call setline(12, "#include <stack>")
-            " call setline(13, "#include <cstdio>")
-            " call setline(14, "#include <cctype>")
-            " call setline(15, "#include <vector>")
-            " call setline(16, "#include <string>")
-            " call setline(17, "#include <cstdlib>")
-            " call setline(18, "#include <cstring>")
-            " call setline(19, "#include <iostream>")
-            " call setline(20, "#include <algorithm>")
-            " call setline(21, "#include <unordered_map>")
-            " call setline(22, "using namespace std;")
-            " call setline(23, "")
-            " call setline(24, "#define fi first")
-            " call setline(25, "#define se second")
-            " call setline(26, "#define ed end()")
-            " call setline(27, "#define re rend()")
-            " call setline(28, "#define bg begin()")
-            " call setline(29, "#define rb rbegin()")
-            " call setline(30, "#define gc getchar()")
-            " call setline(31, "#define pc(x) putchar(x)")
-            " call setline(32, "#define pb(x) push_back(x)")
-            " call setline(33, "#define all(x) x.begin(), x.end()")
-            " call setline(34, "#define sor(x) sort(x.begin(), x.end())")
-            " call setline(35, "#define uni(x) unique(x.begin(), x.end())")
-            " call setline(36, "#define era(x) x.erase(unique(x.begin(),x.end()),x.end()")
-            " call setline(37, "#define posl(x,v) (lower_bound(x.begin(),x.end(),v)-x.begin()")
-            " call setline(38, "#define posu(x,v) (upper_bound(x.begin(),x.end(),v)-x.begin()")
-            " call setline(39, "#define PQ(T) priority_queue<T, vector<T>, greater<T> >")
-            " call setline(40, "#define repn(i, n) for (int i = 1; i <= (n); ++i)")
-            " call setline(41, "#define rep(i, n) for (int i = 0; i < (n); ++i)")
-            " call setline(42, "#define mem(x, a) memset(x, a, sizeof(x))")
-            " call setline(43, "#define ump(S, T) unordered_map<S, T>")
-            " call setline(44, "#define wl(x) wr<long long>(x)")
-            " call setline(45, "#define rl() rd<long long>()")
-            " call setline(46, "#define wi(x) wr<int>(x)")
-            " call setline(47, "#define ri() rd<int>()")
-            " call setline(48, "")
-            " call setline(49, "typedef long long ll;")
-            " call setline(50, "typedef unsigned int uint;")
-            " call setline(51, "typedef unsigned long long ull;")
-            " call setline(52, "typedef pair<int, int> p;")
-            " call setline(53, "typedef vector<int> vi;")
-            " call setline(54, "typedef vector<vi> vvi;")
-            " call setline(55, "typedef vector<ll> vl;")
-            " call setline(56, "typedef vector<vl> vvl;")
-            " call setline(57, "")
-            " call setline(58, "// const int p = 1000000007;")
-            " call setline(59, "// const ll INF = 1ll << 63;")
-            " call setline(60, "// const int INF = 0x7fffffff;")
-            " call setline(61, "template <typename T>")
-            " call setline(62, "inline T rd() {")
-            " call setline(63, "    T x = 0, f = 1;")
-            " call setline(64, "    char c = getchar();")
-            " call setline(65, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
-            " call setline(66, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
-            " call setline(67, "    return x * f;")
-            " call setline(68, "}")
-            " call setline(69, "template <typename T>")
-            " call setline(70, "inline void wr(T x) {")
-            " call setline(71, "    T y = 1, len = 1;")
-            " call setline(72, "    if (x < 0) x = -x, putchar('-');")
-            " call setline(73, "    while (y <= x / 10) y = (y << 1) + (y << 3), ++len;")
-            " call setline(74, "    for (; len; --len) putchar(x / y ^ 48), x %= y, y /= 10;")
-            " call setline(75, "}")
-            " call setline(76, "")
-            " call setline(77, "int main() {")
-            " call setline(78, "    return 0;")
-            " call setline(79, "}")
-            " call setline(80, "")
-            " call setline(81, "//")
-            " call setline(82, "")
-            " call setline(83, "")
-            " call setline(84, "")
-            " call setline(85, "")
-            " call setline(86, "")
+            " " call setline(8, "#include <cstdio>")
+            " call setline(8, "#include <bits/stdc++.h>")
+            " call setline(9, "using namespace std;")
+            " call setline(10, "")
+            " call setline(11, "int main() {")
+            " call setline(12, "    return 0;")
+            " call setline(13, "}")
+            " call setline(14, "")
+            " call setline(15, "//")
+            " call setline(16, "")
+            " call setline(17, "")
+            " call setline(18, "")
+
+            " call setline(8, "#include <bits/stdc++.h>")
+            " call setline(9, "using namespace std;")
+            " call setline(10, "")
+            " call setline(11, "#define fi first")
+            " call setline(12, "#define se second")
+            " call setline(13, "#define gc getchar()")
+            " call setline(14, "#define pc(x) putchar(x)")
+            " call setline(15, "#define pb(x) push_back(x)")
+            " call setline(16, "#define eb(x) emplace_back(x)")
+            " call setline(17, "#define all(x) x.begin(), x.end()")
+            " call setline(18, "#define mem(x, a) memset(x, a, sizeof(x))")
+            " call setline(19, "#define IO() freopen(\"in.txt\", \"r\", stdin)")
+            " call setline(20, "#define rep(i, x, y) for (int i = (x); i < (y); ++i)")
+            " call setline(21, "#define repn(i, x, y) for (int i = (x); i <= (y); ++i)")
+            " call setline(22, "")
+            " call setline(23, "typedef long long ll;")
+            " call setline(24, "")
+            " call setline(25, "template <typename T>")
+            " call setline(26, "inline void rd(T &x) {")
+            " call setline(27, "    x = 0; int f = 1;")
+            " call setline(28, "    char c = getchar();")
+            " call setline(29, "    while (!isdigit(c)) f = c == '-' ? -1 : 1, c = getchar();")
+            " call setline(30, "    while (isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();")
+            " call setline(31, "    x *= f;")
+            " call setline(32, "}")
+            " call setline(33, "")
+            " call setline(34, "int T, n, m, k, x, y, z, cnt;")
+            " call setline(35, "")
+            " call setline(36, "int main() {")
+            " call setline(37, "    // IO();")
+            " call setline(38, "")
+            " call setline(39, "    return 0;")
+            " call setline(40, "}")
+            " call setline(41, "")
+            " call setline(42, "//")
+            " call setline(43, "")
+            " call setline(44, "")
+            " call setline(45, "")
+            " call setline(46, "")
+            " call setline(47, "")
 
         endif
     endif
@@ -644,7 +616,9 @@ endfunc
 
 "" 创建新文件时光标自动移动到 77 行
 " autocmd BufNewFile * normal 77G
-autocmd BufNewFile * normal 11G
+autocmd BufNewFile * normal 8G
+" autocmd BufNewFile * normal 11G
+" autocmd BufNewFile * normal 37G
 ""实现上面函数中的，Last modified功能
 "autocmd BufWrite,BufWritePre,FileWritePre  *.cpp    ks|call LastModified()|'s  
 "func LastModified()
