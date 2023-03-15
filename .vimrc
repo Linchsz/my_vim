@@ -64,9 +64,9 @@ nnoremap <silent><leader>v gg<S-v><S-g>
 " inoremap <silent><leader>v <ESC>gg<S-v><S-g>
 vnoremap <silent><leader>v <ESC>gg<S-v><S-g>
 "复制全文到系统剪切板
-nnoremap <silent><leader>Y mugg<S-v><S-g>y`u
-" inoremap <silent><leader>Y <ESC>mujgg<S-v><S-g>y`u
-vnoremap <silent><leader>Y <ESC>mujgg<S-v><S-g>y`u
+nnoremap <silent><leader>Y muggy<S-g>`u
+" inoremap <silent><leader>Y <ESC>muggy<S-g>`u
+vnoremap <silent><leader>Y <ESC>muggy<S-g>`u
 "复制主体部分(去首尾注释)到系统剪切板
 nnoremap <silent><leader>y mugg}j<S-v><S-g>{ky`u
 " inoremap <silent><leader>y <ESC>mugg}j<S-v><S-g>{ky`u
@@ -211,9 +211,7 @@ filetype indent on
 
 "命令模式下, 在底部显示, 当前键入的指令
 set showcmd
-
 set autoindent
-
 set smartindent
 
 "支持使用鼠标
@@ -226,28 +224,22 @@ set mouse=a
 
 "启动 vim 时关闭折叠代码
 set nofoldenable
-
 "显示行号
 set nu
 
 "显示光标所在的当前行的行号,其他行都为相对于该行的相对行号
 "set relativenumber
-
 "光标所在的当前行高亮
 "set cursorline
-
 "设置行宽,即一行显示多少个字符
 "set textwidth=80
-
 "关闭自动折行
 "set nowrap
 
 "指定折行处与编辑窗口的右边缘之间空出的字符数
 set wrapmargin=2
-
 "水平滚动时,光标距离行首或行尾的位置(单位：字符),该配置在不折行时比较有用
 set sidescrolloff=15
-
 "垂直滚动时,光标距离顶部/底部的位置(单位：行), 999 可视为居中
 set scrolloff=999
 "居中
@@ -268,10 +260,8 @@ set scrolloff=999
 
 "出错时,不要发出响声
 set noerrorbells
-
 "出错时,发出视觉提示,通常是屏幕闪烁
 set visualbell
-
 " 当 vim 进行编辑时, 如果命令错误, 会发出警报, 该设置去掉警报
 set t_vb=
 
@@ -282,7 +272,7 @@ endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-" 编译/运行 按键映射 (支持 C, C++, Java, Python, Shell)  CRP
+" 编译/运行 按键映射 (支持 C, C++, Java, Python, Shell, Go)  CRP
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <leader> + ee 编译
 nnoremap <leader>ee :call CompileCode()<CR>
@@ -291,7 +281,7 @@ vnoremap <leader>ee <ESC>:call CompileCode()<CR>
 " <leader> + er 运行 
 nnoremap <leader>er :call RunResult()<CR>
 vnoremap <leader>er :call RunResult()<CR>
-" <leader> + r C++17 编译并运行
+" <leader> + r C++17 & go 编译并运行
 nnoremap <leader>r :w<CR><ESC>:call CompileRun()<CR>
 " inoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
 vnoremap <leader>r <ESC>:w<CR><ESC>:call CompileRun()<CR>
@@ -367,6 +357,8 @@ func! CompileCode() " 只编译
         exec "call CompileGcc()"
     elseif &filetype == "python"
         exec "!python %"
+    elseif &filetype == "go"
+        exec "!go build %"
     elseif &filetype == "shell"
         exec "!chmod a+x %"
     elseif &filetype == "java"
@@ -383,8 +375,10 @@ func! RunResult() " 只运行
         exec "! ./%<"
     elseif &filetype == "python"
         exec "!python %"
+    elseif &filetype == "go"
+        exec "! ./%<"
     elseif &filetype == "shell"
-    elec "! ./%"
+    j   exec "! ./%"
 elseif &filetype == "java"
     exec "!java %<"
 endif
@@ -405,6 +399,8 @@ func! CompileRun() " 编译并运行
         exec "!gcc -o % %< && ./%<"
     elseif &filetype == "python"
         exec "!python3 %"
+    elseif &filetype == "go"
+        exec "!go run %"
     elseif &filetype == 'shell'
         exec "!chmod a+x % && ./%<"
     elseif &filetype == "java"
@@ -425,10 +421,12 @@ func! CompileRunShowTime()
         exec "!gcc % -o %< && time ./%<"
     elseif &filetype == "python"
         exec "!time python %"
+    elseif &filetype == "go"
+        exec "!time go run %"
     elseif &filetype == 'shell'
-        exec "!time chmod a+x % && ./%"
+        exec "!time chmod a+x % && time ./%"
     elseif &filetype == "java"
-        exec "!time javac % && java %<"
+        exec "!time javac % && time java %<"
     endif
 endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -522,7 +520,7 @@ func SetTitle()
         call setline(2,"")
         call SetComment_sh()
     elseif &filetype == 'sh'
-        call setline(1,"#!/system/bin/sh")
+        call setline(1,"#!/bin/sh")
         call setline(2,"")
         call SetComment_sh()
     else
@@ -549,25 +547,25 @@ func SetTitle()
             call setline(12, "}")
         elseif &filetype == 'cpp'
 
-            call setline(8,  "")
-            call setline(9,  "")
-            call setline(10, "")
-            call setline(11, "//")
-            call setline(12, "")
-            call setline(13, "")
+            " call setline(8,  "")
+            " call setline(9,  "")
+            " call setline(10, "")
+            " call setline(11, "//")
+            " call setline(12, "")
+            " call setline(13, "")
 
             " " call setline(8, "#include <cstdio>")
-            " call setline(8, "#include <bits/stdc++.h>")
-            " call setline(9, "using namespace std;")
-            " call setline(10, "")
-            " call setline(11, "int main() {")
-            " call setline(12, "    return 0;")
-            " call setline(13, "}")
-            " call setline(14, "")
-            " call setline(15, "//")
-            " call setline(16, "")
-            " call setline(17, "")
-            " call setline(18, "")
+            call setline(8, "#include <bits/stdc++.h>")
+            call setline(9, "using namespace std;")
+            call setline(10, "")
+            call setline(11, "int main() {")
+            call setline(12, "    return 0;")
+            call setline(13, "}")
+            call setline(14, "")
+            call setline(15, "//")
+            call setline(16, "")
+            call setline(17, "")
+            call setline(18, "")
 
             " call setline(8, "#include <bits/stdc++.h>")
             " call setline(9, "using namespace std;")
@@ -616,7 +614,7 @@ endfunc
 
 "" 创建新文件时光标自动移动到 77 行
 " autocmd BufNewFile * normal 77G
-autocmd BufNewFile * normal 8G
+autocmd BufNewFile * normal 11G
 " autocmd BufNewFile * normal 11G
 " autocmd BufNewFile * normal 37G
 ""实现上面函数中的，Last modified功能
